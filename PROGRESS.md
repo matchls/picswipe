@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-04-30  
+**Dernière mise à jour:** 2026-04-30 (Step 5 complete)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -20,8 +20,9 @@
   - App.json: `newArchEnabled: false` (résout erreur Android)
   - Erreur "@react-native-masked-view" résolue avec `npm install`
 
-- 🔄 **Step 2 IN PROGRESS:** Créer `src/services/photos.service.ts`
-  - À faire: fonctions `getPhotosFromLibrary()` et `getPhotoById()`
+- ✅ **Step 2 COMPLETED:** Créer `src/services/photos.service.ts`
+  - Fonctions `getPhotosFromLibrary()` et `getPhotoById()` implémentées
+  - Gestion des permissions avec MediaLibrary.requestPermissionsAsync()
 
 - ✅ **Step 3 COMPLETED:** Afficher une photo dans index.tsx
   - useState<Asset[]> pour stocker les photos
@@ -29,15 +30,24 @@
   - Affichage conditionnel (loading, erreur, photo)
   - Une vraie photo du téléphone s'affiche!
 
+- ✅ **Step 4 COMPLETED:** Créer usePhotoLibrary hook
+  - Extraction de la logique photo loading de index.tsx dans src/hooks/usePhotoLibrary.ts
+  - Hook retourne { photos, isLoading, error }
+  - index.tsx simplifié avec le hook
+
+- ✅ **Step 5 COMPLETED:** FlatList avec pagination
+  - Remplacé <Image> unique par <FlatList> dans index.tsx
+  - keyExtractor: (photo) => photo.id
+  - renderItem affiche chaque photo (300x400)
+  - 20 photos chargées initialement
+
 ---
 
 ## ⏳ À FAIRE (ordre d'exécution)
 
 ### Phase 2: Affichage des photos
 
-- Step 4: Créer usePhotoLibrary hook
-- Step 5: FlatList avec pagination
-- Step 6: Créer SwipeCard component
+- 🔄 **Step 6 IN PROGRESS:** Créer SwipeCard component
 
 ### Phase 3: Swipe (CORE)
 

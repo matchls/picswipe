@@ -10,6 +10,7 @@ import { getPhotosFromLibrary } from "../../src/services/photos.service";
 import type { Asset } from "expo-media-library";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
 import { FlatList } from "react-native-gesture-handler";
+import SwipeCard from "../../src/components/ui/SwipeCard";
 
 export default function SwiperScreen() {
   const { photos, isLoading, error } = usePhotoLibrary();
@@ -27,12 +28,7 @@ export default function SwiperScreen() {
             <FlatList
               data={photos}
               keyExtractor={(photo) => photo.id}
-              renderItem={({ item }) => (
-                <Image
-                  source={{ uri: item.uri }}
-                  style={{ width: 300, height: 400 }}
-                />
-              )}
+              renderItem={({ item }) => <SwipeCard photo={item} />}
               onEndReached={() => {}}
               numColumns={1}
             />
