@@ -8,26 +8,11 @@ import {
 import { useEffect, useState } from "react";
 import { getPhotosFromLibrary } from "../../src/services/photos.service";
 import type { Asset } from "expo-media-library";
+import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
 
 export default function SwiperScreen() {
-  const [photos, setPhotos] = useState<Asset[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { photos, isLoading, error } = usePhotoLibrary();
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
-
-  useEffect(() => {
-    // Au démarrage de l'écran, charge les photos
-    const loadPhotos = async () => {
-      try {
-        const result = await getPhotosFromLibrary();
-        setPhotos(result);
-      } catch (error) {
-        console.error("Failed to load photos:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadPhotos();
-  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

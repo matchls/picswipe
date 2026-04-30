@@ -23,19 +23,24 @@
 - 🔄 **Step 2 IN PROGRESS:** Créer `src/services/photos.service.ts`
   - À faire: fonctions `getPhotosFromLibrary()` et `getPhotoById()`
 
+- ✅ **Step 3 COMPLETED:** Afficher une photo dans index.tsx
+  - useState<Asset[]> pour stocker les photos
+  - useEffect pour charger au mount
+  - Affichage conditionnel (loading, erreur, photo)
+  - Une vraie photo du téléphone s'affiche!
+
 ---
 
 ## ⏳ À FAIRE (ordre d'exécution)
 
-### Phase 1 (suite)
-- Step 3: Afficher une photo dans index.tsx avec useEffect et useState
-
 ### Phase 2: Affichage des photos
+
 - Step 4: Créer usePhotoLibrary hook
 - Step 5: FlatList avec pagination
 - Step 6: Créer SwipeCard component
 
 ### Phase 3: Swipe (CORE)
+
 - Step 7: PanGestureHandler basique
 - Step 8: useSwipeGesture hook
 - Step 9: Animations avec reanimated
@@ -43,12 +48,14 @@
 - Step 11: Rotation et labels
 
 ### Phase 4: Persistance
+
 - Step 12: Zustand store
 - Step 13: AsyncStorage service
 - Step 14: useDecisionStore hook
 - Step 15: Connecter swipe à persistance
 
 ### Phase 5: Review + Suppression
+
 - Step 16: app/(tabs)/review.tsx
 - Step 17: PhotoGrid component
 - Step 18: getMultiplePhotos() fonction
@@ -56,6 +63,7 @@
 - Step 20: deletePhotosFromDevice() vraie suppression
 
 ### Phase 6: Polish
+
 - Step 21: Feedback visuel banner
 - Step 22: Edge cases (lib vide, permission refusée)
 - Step 23: Constantes (layout.ts, colors.ts)
@@ -100,6 +108,7 @@ picswipe/
 ## 📦 Stack & Conventions
 
 **Stack:**
+
 - React Native 0.81.5
 - Expo 54.0.33
 - Expo Router 55.0.13
@@ -111,6 +120,7 @@ picswipe/
 - Expo Media Library 55.0.15
 
 **Conventions de code:**
+
 - camelCase pour tous les noms de variables/fonctions
 - Variables en anglais
 - Commentaires en anglais (uniquement quand c'est utile)
@@ -118,6 +128,7 @@ picswipe/
 - Pas d'over-engineering: code lisible avant perfect
 
 **Approche:**
+
 - L'utilisateur code, Claude guide (instructions, pas de code)
 - Débug: exploration codebase, puis solutions
 - Focus sur apprentissage React Native spécifique (gestes, animations, permissions)
@@ -139,11 +150,11 @@ picswipe/
 
 ## 🔧 Erreurs rencontrées et solutions
 
-| Erreur | Cause | Solution |
-|--------|-------|----------|
+| Erreur                                                 | Cause                                                         | Solution                              |
+| ------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------- |
 | "java.lang.string cannot be cast to java.lang.boolean" | `newArchEnabled: true` incompatible avec certaines librairies | `newArchEnabled: false` dans app.json |
-| "@react-native-masked-view" missing | Dépendance indirecte non installée | `npm install` |
-| `app/index.tsx` conflictuelle | Routing confus avec app/(tabs) | Supprimer app/index.tsx |
+| "@react-native-masked-view" missing                    | Dépendance indirecte non installée                            | `npm install`                         |
+| `app/index.tsx` conflictuelle                          | Routing confus avec app/(tabs)                                | Supprimer app/index.tsx               |
 
 ---
 
