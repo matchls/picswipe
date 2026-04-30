@@ -9,10 +9,11 @@ import { useEffect, useState } from "react";
 import { getPhotosFromLibrary } from "../../src/services/photos.service";
 import type { Asset } from "expo-media-library";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
+import { FlatList } from "react-native-gesture-handler";
 
 export default function SwiperScreen() {
   const { photos, isLoading, error } = usePhotoLibrary();
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  // const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -23,12 +24,20 @@ export default function SwiperScreen() {
           <Text>Aucune photo trouvée</Text>
         ) : (
           <>
-            <Image
-              source={{ uri: photos[currentPhotoIndex].uri }}
-              style={{ width: 300, height: 400 }}
+            <FlatList
+              data={photos}
+              keyExtractor={(photo) => photo.id}
+              renderItem={({ item }) => (
+                <Image
+                  source={{ uri: item.uri }}
+                  style={{ width: 300, height: 400 }}
+                />
+              )}
+              onEndReached={() => {}}
+              numColumns={1}
             />
             <Text style={{ marginTop: 10 }}>
-              Photo {currentPhotoIndex + 1} / {photos.length}
+              {/* Photo {currentPhotoIndex + 1} / {photos.length} */}
             </Text>
           </>
         )}
