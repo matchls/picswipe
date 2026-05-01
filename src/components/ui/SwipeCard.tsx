@@ -2,18 +2,22 @@ import { Asset } from "expo-media-library";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
+import { useAnimatedStyle } from "react-native-reanimated";
+import useSwipeGesture from "../../hooks/useSwipeGesture";
 
 interface Props {
   photo: Asset;
 }
 
 export default function SwipeCard({ photo }: Props) {
-  const gesture = Gesture.Pan().onUpdate((event) => {
-    console.log("translationX:", event.translationX);
-  });
+  const { gesture, translateX } = useSwipeGesture();
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }],
+  }));
+
   return (
     <GestureDetector gesture={gesture}>
-      <Animated.View>
+      <Animated.View style={animatedStyle}>
         <View style={styles.card}>
           <Image source={{ uri: photo.uri }} style={styles.image} />
           <View style={styles.buttonsContainer}>
