@@ -8,13 +8,18 @@ import {
   Extrapolation,
 } from "react-native-reanimated";
 import useSwipeGesture from "../../hooks/useSwipeGesture";
+import useDecisionStore from "../../store/useDecisionStore";
 
 interface Props {
   photo: Asset;
 }
 
 export default function SwipeCard({ photo }: Props) {
-  const { gesture, translateX } = useSwipeGesture();
+  const { addKeep, addDelete } = useDecisionStore();
+  const { gesture, translateX } = useSwipeGesture(
+    () => addKeep(photo.id),
+    () => addDelete(photo.id),
+  );
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       { translateX: translateX.value },
