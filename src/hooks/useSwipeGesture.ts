@@ -2,6 +2,7 @@ import {
   useSharedValue,
   withTiming,
   withSpring,
+  runOnJS,
 } from "react-native-reanimated";
 import { Gesture } from "react-native-gesture-handler";
 
@@ -17,10 +18,10 @@ export default function useSwipeGesture(
     .onEnd((event) => {
       if (Math.abs(event.translationX) > 150) {
         if (event.translationX > 0) {
-          onSwipeRight();
+          runOnJS(onSwipeRight)();
           translateX.value = withTiming(500);
         } else if (event.translationX < 0) {
-          onSwipeLeft();
+          runOnJS(onSwipeLeft)();
           translateX.value = withTiming(-500);
         }
       } else {

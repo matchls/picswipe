@@ -36,6 +36,14 @@ export default function SwipeCard({ photo }: Props) {
       Extrapolation.CLAMP,
     ),
   }));
+  console.log(
+    "toKeep:",
+    useDecisionStore((s) => s.toKeep),
+  );
+  console.log(
+    "toDelete:",
+    useDecisionStore((s) => s.toDelete),
+  );
 
   const deleteLabelStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
