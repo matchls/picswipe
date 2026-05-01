@@ -1,21 +1,32 @@
 import { Asset } from "expo-media-library";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { GestureDetector, Gesture } from "react-native-gesture-handler";
+import Animated from "react-native-reanimated";
+
 interface Props {
   photo: Asset;
 }
+
 export default function SwipeCard({ photo }: Props) {
+  const gesture = Gesture.Pan().onUpdate((event) => {
+    console.log("translationX:", event.translationX);
+  });
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: photo.uri }} style={styles.image} />
-      <View style={styles.buttonsContainer}>
-        <Pressable style={[styles.button, styles.deleteButton]}>
-          <Text style={styles.buttonText}>Supprimer</Text>
-        </Pressable>
-        <Pressable style={[styles.button, styles.keepButton]}>
-          <Text style={styles.buttonText}>Garder</Text>
-        </Pressable>
-      </View>
-    </View>
+    <GestureDetector gesture={gesture}>
+      <Animated.View>
+        <View style={styles.card}>
+          <Image source={{ uri: photo.uri }} style={styles.image} />
+          <View style={styles.buttonsContainer}>
+            <Pressable style={[styles.button, styles.deleteButton]}>
+              <Text style={styles.buttonText}>Supprimer</Text>
+            </Pressable>
+            <Pressable style={[styles.button, styles.keepButton]}>
+              <Text style={styles.buttonText}>Garder</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Animated.View>
+    </GestureDetector>
   );
 }
 

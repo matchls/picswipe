@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-04-30 (Step 5 complete)
+**Dernière mise à jour:** 2026-05-01 (Step 6 complete, Step 7 bloqué erreurs dépendances)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -47,11 +47,16 @@
 
 ### Phase 2: Affichage des photos
 
-- 🔄 **Step 6 IN PROGRESS:** Créer SwipeCard component
+- ✅ **Step 6 COMPLETED:** Créer SwipeCard component
+  - Composant réutilisable avec Image + deux boutons (Garder/Supprimer)
+  - Styling avec React Native StyleSheet (vert/rouge)
+  - Intégré dans FlatList renderItem
 
 ### Phase 3: Swipe (CORE)
 
-- Step 7: PanGestureHandler basique
+- 🔄 **Step 7 IN PROGRESS:** GestureDetector + Gesture.Pan() basique
+  - SwipeCard.tsx a GestureDetector + Gesture.Pan().onUpdate() prêt
+  - Bloqué: erreurs de dépendances (voir section Erreurs ci-dessous)
 - Step 8: useSwipeGesture hook
 - Step 9: Animations avec reanimated
 - Step 10: Retour élastique (spring)
@@ -165,6 +170,10 @@ picswipe/
 | "java.lang.string cannot be cast to java.lang.boolean" | `newArchEnabled: true` incompatible avec certaines librairies | `newArchEnabled: false` dans app.json |
 | "@react-native-masked-view" missing                    | Dépendance indirecte non installée                            | `npm install`                         |
 | `app/index.tsx` conflictuelle                          | Routing confus avec app/(tabs)                                | Supprimer app/index.tsx               |
+| TurboModule "installTurboModule" error                 | reanimated@4.x nécessite newArchEnabled: true                 | `newArchEnabled: true` dans app.json  |
+| Cannot find module 'react-native-worklets/plugin'      | npx expo install a supprimé react-native-worklets             | `npm install react-native-worklets --legacy-peer-deps` |
+| Unable to resolve "expo-linking"                       | npm install cassé par conflits peer deps                      | `rm -rf node_modules && npm install --legacy-peer-deps` |
+| Asset not imported in usePhotoLibrary.ts               | useState<Asset[]> sans import Asset                           | Ajouter `import type { Asset } from "expo-media-library"` |
 
 ---
 
@@ -180,10 +189,9 @@ picswipe/
 
 ## 🚀 Prochaines étapes
 
-1. **Terminer Step 2** → `src/services/photos.service.ts`
-2. **Step 3** → Afficher une photo dans index.tsx
-3. **Step 4-6** → FlatList et SwipeCard
-4. **Step 7-11** → Le coeur du projet (swipe + animations)
+1. **Débloquer Step 7** → `rm -rf node_modules && npm install --legacy-peer-deps && npx expo start --clear`
+2. **Step 7** → Vérifier que Gesture.Pan() log les translationX dans la console
+3. **Step 8-11** → Le coeur du projet (swipe + animations)
 
 ---
 

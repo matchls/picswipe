@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPhotosFromLibrary } from "../services/photos.service";
+import type { Asset } from "expo-media-library";
 
 export default function usePhotosLibrary() {
   const [photos, setPhotos] = useState<Asset[]>([]);

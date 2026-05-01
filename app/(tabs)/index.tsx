@@ -1,15 +1,6 @@
-import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  SafeAreaView,
-} from "react-native";
-import { useEffect, useState } from "react";
-import { getPhotosFromLibrary } from "../../src/services/photos.service";
-import type { Asset } from "expo-media-library";
+import { View, Text, ActivityIndicator, SafeAreaView } from "react-native";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import SwipeCard from "../../src/components/ui/SwipeCard";
 
 export default function SwiperScreen() {
