@@ -16,7 +16,7 @@ export default function useSwipeGesture(
       translateX.value = event.translationX;
     })
     .onEnd((event) => {
-      if (Math.abs(event.translationX) > 150) {
+      if (Math.abs(event.translationX) > 100) {
         if (event.translationX > 0) {
           runOnJS(onSwipeRight)();
           translateX.value = withTiming(500);

@@ -54,33 +54,25 @@ export default function SwipeCard({ photo }: Props) {
     ),
   }));
   return (
-    <GestureDetector gesture={gesture}>
-      <Animated.View style={animatedStyle}>
-        <View style={styles.card}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: photo.uri }} style={styles.image} />
-            <Animated.View
-              style={[styles.label, styles.labelKeep, keepLabelStyle]}
-            >
-              <Text style={styles.labelText}>GARDER</Text>
-            </Animated.View>
-            <Animated.View
-              style={[styles.label, styles.labelDelete, deleteLabelStyle]}
-            >
-              <Text style={styles.labelText}>SUPPRIMER</Text>
-            </Animated.View>
+    <View style={styles.wrapper}>
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={animatedStyle}>
+          <View style={styles.card}>
+            <View>
+              <Image source={{ uri: photo.uri }} style={styles.image} />
+            </View>
           </View>
-          <View style={styles.buttonsContainer}>
-            <Pressable style={[styles.button, styles.deleteButton]}>
-              <Text style={styles.buttonText}>Supprimer</Text>
-            </Pressable>
-            <Pressable style={[styles.button, styles.keepButton]}>
-              <Text style={styles.buttonText}>Garder</Text>
-            </Pressable>
-          </View>
-        </View>
+        </Animated.View>
+      </GestureDetector>
+      <Animated.View style={[styles.label, styles.labelKeep, keepLabelStyle]}>
+        <Text style={styles.labelText}>GARDER</Text>
       </Animated.View>
-    </GestureDetector>
+      <Animated.View
+        style={[styles.label, styles.labelDelete, deleteLabelStyle]}
+      >
+        <Text style={styles.labelText}>SUPPRIMER</Text>
+      </Animated.View>
+    </View>
   );
 }
 
@@ -90,15 +82,17 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     position: "relative",
   },
+  wrapper: {
+    width: 300,
+    height: 400,
+    position: "relative",
+  },
   image: {
     width: 300,
     height: 400,
     borderRadius: 8,
   },
-  imageContainer: {
-    width: 300,
-    height: 400,
-  },
+
   buttonsContainer: {
     width: "100%",
     flexDirection: "row",
