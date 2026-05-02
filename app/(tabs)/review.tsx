@@ -1,11 +1,31 @@
-import { View, Text, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  FlatList,
+  Image,
+  StyleSheet,
+} from "react-native";
+import useDecisionStore from "../../src/store/useDecisionStore";
 
 export default function ReviewScreen() {
+  const toDelete = useDecisionStore((s) => s.toDelete);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Écran Review (résumé ici)</Text>
-      </View>
-    </SafeAreaView>
+    <FlatList
+      data={toDelete}
+      keyExtractor={(item) => item.id}
+      numColumns={3}
+      renderItem={({ item }) => (
+        <Image source={{ uri: item.uri }} style={styles.thumbnail} />
+      )}
+    ></FlatList>
   );
 }
+
+const styles = StyleSheet.create({
+  thumbnail: {
+    width: "33%",
+    aspectRatio: 1,
+    padding: 2,
+  },
+});

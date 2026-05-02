@@ -17,8 +17,8 @@ interface Props {
 export default function SwipeCard({ photo }: Props) {
   const { addKeep, addDelete } = useDecisionStore();
   const { gesture, translateX } = useSwipeGesture(
-    () => addKeep(photo.id),
-    () => addDelete(photo.id),
+    () => addKeep({ id: photo.id, uri: photo.uri }),
+    () => addDelete({ id: photo.id, uri: photo.uri }),
   );
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [

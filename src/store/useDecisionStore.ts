@@ -1,17 +1,19 @@
 import { create } from "zustand";
 
+type PhotoDecision = { id: string; uri: string };
 type DecisionStore = {
-  toKeep: string[];
-  toDelete: string[];
-  addKeep: (id: string) => void;
-  addDelete: (id: string) => void;
+  toKeep: PhotoDecision[];
+  toDelete: PhotoDecision[];
+  addKeep: (photo: PhotoDecision) => void;
+  addDelete: (photo: PhotoDecision) => void;
 };
 
 const useDecisionStore = create<DecisionStore>()((set) => ({
   toKeep: [],
   toDelete: [],
-  addKeep: (id) => set((state) => ({ toKeep: [...state.toKeep, id] })),
-  addDelete: (id) => set((state) => ({ toDelete: [...state.toDelete, id] })),
+  addKeep: (photo) => set((state) => ({ toKeep: [...state.toKeep, photo] })),
+  addDelete: (photo) =>
+    set((state) => ({ toDelete: [...state.toDelete, photo] })),
 }));
 
 export default useDecisionStore;
