@@ -12,13 +12,15 @@ import useDecisionStore from "../../store/useDecisionStore";
 
 interface Props {
   photo: Asset;
+  onSwipeComplete: () => void;
 }
 
-export default function SwipeCard({ photo }: Props) {
+export default function SwipeCard({ photo, onSwipeComplete }: Props) {
   const { addKeep, addDelete } = useDecisionStore();
   const { gesture, translateX } = useSwipeGesture(
     () => addKeep({ id: photo.id, uri: photo.uri }),
     () => addDelete({ id: photo.id, uri: photo.uri }),
+    onSwipeComplete,
   );
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [

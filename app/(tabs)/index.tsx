@@ -1,11 +1,11 @@
 import { View, Text, ActivityIndicator, SafeAreaView } from "react-native";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
-import { FlatList } from "react-native";
 import SwipeCard from "../../src/components/ui/SwipeCard";
+import { useState } from "react";
 
 export default function SwiperScreen() {
   const { photos, isLoading, error } = usePhotoLibrary();
-  // const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -14,19 +14,14 @@ export default function SwiperScreen() {
           <ActivityIndicator size="large" />
         ) : photos.length === 0 ? (
           <Text>Aucune photo trouvée</Text>
+        ) : currentIndex >= photos.length ? (
+          <Text>Plus de photos !</Text>
         ) : (
-          <>
-            <FlatList
-              data={photos}
-              keyExtractor={(photo) => photo.id}
-              renderItem={({ item }) => <SwipeCard photo={item} />}
-              onEndReached={() => {}}
-              numColumns={1}
-            />
-            <Text style={{ marginTop: 10 }}>
-              {/* Photo {currentPhotoIndex + 1} / {photos.length} */}
-            </Text>
-          </>
+          <SwipeCard
+            key={photos[currentIndex].id}
+            photo={photos[currentIndex]}
+            onSwipeComplete={() => setCurrentIndex((i) => i + 1)}
+          />
         )}
       </View>
     </SafeAreaView>

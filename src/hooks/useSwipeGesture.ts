@@ -9,6 +9,7 @@ import { Gesture } from "react-native-gesture-handler";
 export default function useSwipeGesture(
   onSwipeRight: () => void,
   onSwipeLeft: () => void,
+  onSwipeComplete: () => void,
 ) {
   const translateX = useSharedValue(0);
   const gesture = Gesture.Pan()
@@ -19,10 +20,14 @@ export default function useSwipeGesture(
       if (Math.abs(event.translationX) > 100) {
         if (event.translationX > 0) {
           runOnJS(onSwipeRight)();
-          translateX.value = withTiming(500);
+          translateX.value = withTiming(500, {}, () =>
+            runOnJS(onSwipeComplete)(),
+          );
         } else if (event.translationX < 0) {
           runOnJS(onSwipeLeft)();
-          translateX.value = withTiming(-500);
+          translateX.value = withTiming(-500, {}, () =>
+            runOnJS(onSwipeComplete)(),
+          );
         }
       } else {
         translateX.value = withSpring(0);
