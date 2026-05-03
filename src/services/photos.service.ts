@@ -33,16 +33,27 @@ export async function getPhotoById(photoId: string) {
 
 export function groupPhotosByMonth(
   photos: Asset[],
-): { label: string; photos: Asset[] }[] {
-  const groups: Record<string, Asset[]> = {};
+): { title: string; data: { label: string; photos: Asset[] }[] }[] {
+  const groups: Record<string, Record<string, Asset[]>> = {};
+
   for (const photo of photos) {
     const date = new Date(photo.creationTime);
+    const year = date.getFullYear().toString();
     const label = date.toLocaleDateString("fr-FR", {
       month: "long",
       year: "numeric",
     });
-    if (!groups[label]) groups[label] = [];
-    groups[label].push(photo);
+    if (!groups[year]) groups[year] = {};
+    if (!groups[year][label]) groups[year][label] = [];
+    groups[year][label].push(photo);
   }
-  return Object.entries(groups).map(([label, photos]) => ({ label, photos }));
+
+  return Object.entries(groups)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, months]) => ({
+      title: year,
+      data: Object.entries(months)
+        .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
+        .map(([label, photos]) => ({ label, photos })),
+    }));
 }

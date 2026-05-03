@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  SafeAreaView,
   FlatList,
   Image,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
 } from "react-native";
 import useDecisionStore from "../../src/store/useDecisionStore";
 import * as MediaLibrary from "expo-media-library";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ReviewScreen() {
   const toDelete = useDecisionStore((s) => s.toDelete);
