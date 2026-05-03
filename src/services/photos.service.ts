@@ -10,8 +10,9 @@ export async function getPhotosFromLibrary(): Promise<Asset[]> {
     }
 
     const result = await MediaLibrary.getAssetsAsync({
-      first: 20,
+      first: 10000,
       mediaType: "photo",
+      sortBy: MediaLibrary.SortBy.creationTime,
     });
     return result.assets;
   } catch (error) {
@@ -28,4 +29,20 @@ export async function getPhotoById(photoId: string) {
     console.error("Error getting photo by ID:", error);
     throw error;
   }
+}
+
+export function groupPhotosByMonth(
+  photos: Asset[],
+): { label: string; photos: Asset[] }[] {
+  const groups: Record<string, Asset[]> = {};
+  for (const photo of photos) {
+    const date = new Date(photo.creationTime);
+    const label = date.toLocaleDateString("fr-FR", {
+      month: "long",
+      year: "numeric",
+    });
+    if (!groups[label]) groups[label] = [];
+    groups[label].push(photo);
+  }
+  return Object.entries(groups).map(([label, photos]) => ({ label, photos }));
 }
