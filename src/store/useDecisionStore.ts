@@ -7,6 +7,7 @@ type DecisionStore = {
   addKeep: (photo: PhotoDecision) => void;
   addDelete: (photo: PhotoDecision) => void;
   clearDelete: () => void;
+  removeFromDelete: (id: string) => void;
 };
 
 const useDecisionStore = create<DecisionStore>()((set) => ({
@@ -16,6 +17,10 @@ const useDecisionStore = create<DecisionStore>()((set) => ({
   addDelete: (photo) =>
     set((state) => ({ toDelete: [...state.toDelete, photo] })),
   clearDelete: () => set({ toDelete: [] }),
+  removeFromDelete: (id) =>
+    set((state) => ({
+      toDelete: state.toDelete.filter((p) => p.id !== id),
+    })),
 }));
 
 export default useDecisionStore;

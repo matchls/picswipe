@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
   folderItem: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     gap: 10,
     padding: 12,
