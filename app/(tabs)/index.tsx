@@ -3,7 +3,6 @@ import {
   Text,
   ActivityIndicator,
   Pressable,
-  FlatList,
   StyleSheet,
   SectionList,
 } from "react-native";
@@ -15,12 +14,22 @@ import type { Asset } from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
+function chunk<T>(arr: T[], size: number): T[][] {
+  return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
+    arr.slice(i * size, i * size + size),
+  );
+}
+
 export default function SwiperScreen() {
   const { photos, isLoading, error } = usePhotoLibrary();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedFolder, setSelectedFolder] = useState<Asset[] | null>(null);
 
   const folders = groupPhotosByMonth(photos);
+  const gridFolders = folders.map((section) => ({
+    title: section.title,
+    data: chunk(section.data, 2),
+  }));
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -30,20 +39,27 @@ export default function SwiperScreen() {
           <Text>Aucune photo trouvée</Text>
         ) : selectedFolder === null ? (
           <SectionList
-            sections={folders}
-            keyExtractor={(item) => item.label}
+            sections={gridFolders}
+            keyExtractor={(row) => row.map((f) => f.label).join("-")}
             renderSectionHeader={({ section }) => (
               <Text style={styles.yearHeader}>{section.title}</Text>
             )}
-            renderItem={({ item }) => (
-              <Pressable
-                onPress={() => setSelectedFolder(item.photos)}
-                style={styles.folderItem}
-              >
-                <Ionicons name="folder" size={32} color="f59e0b" />
-                <Text>{item.label}</Text>
-                <Text>{item.photos.length} photos</Text>
-              </Pressable>
+            renderItem={({ item: row }) => (
+              <View style={styles.folderRow}>
+                {row.map((folder) => (
+                  <Pressable
+                    key={folder.label}
+                    onPress={() => setSelectedFolder(folder.photos)}
+                    style={styles.folderItem}
+                  >
+                    <Ionicons name="folder" size={48} color="#82d37dff" />
+                    <Text style={styles.folderLabel}>{folder.label}</Text>
+                    <Text style={styles.folderCount}>
+                      {folder.photos.length} photos
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
             )}
           />
         ) : currentIndex >= selectedFolder.length ? (
@@ -72,20 +88,42 @@ export default function SwiperScreen() {
 
 const styles = StyleSheet.create({
   returnButton: {
-    width: 200,
     fontWeight: "bold",
-    backgroundColor: "#58b452ff",
+    backgroundColor: "#82d37dff",
+    padding: 16,
+    margin: 16,
+    borderRadius: 8,
+    alignItems: "center",
   },
   yearHeader: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "white",
+    width: "90%",
+    margin: "auto",
     padding: 10,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#5ca056ff",
+    borderRadius: 5,
+    textAlign: "center",
+  },
+  folderRow: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    paddingHorizontal: 8,
   },
   folderItem: {
-    flexDirection: "column",
+    width: "50%",
     alignItems: "center",
-    gap: 10,
     padding: 12,
+    gap: 6,
+  },
+  folderLabel: {
+    fontSize: 13,
+    textAlign: "center",
+    textTransform: "capitalize",
+  },
+  folderCount: {
+    fontSize: 11,
+    color: "#6b7280",
   },
 });
