@@ -38,14 +38,6 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
       Extrapolation.CLAMP,
     ),
   }));
-  console.log(
-    "toKeep:",
-    useDecisionStore((s) => s.toKeep),
-  );
-  console.log(
-    "toDelete:",
-    useDecisionStore((s) => s.toDelete),
-  );
 
   const deleteLabelStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
@@ -93,32 +85,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 400,
     borderRadius: 8,
-  },
-
-  buttonsContainer: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 6,
-    width: "40%",
-    alignItems: "center",
-  },
-  keepButton: {
-    backgroundColor: "#22c55e",
-  },
-  deleteButton: {
-    backgroundColor: "#ef4444",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   label: {
     position: "absolute",

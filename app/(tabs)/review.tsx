@@ -15,10 +15,19 @@ export default function ReviewScreen() {
   const toDelete = useDecisionStore((s) => s.toDelete);
   const clearDelete = useDecisionStore((s) => s.clearDelete);
   const removeFromDelete = useDecisionStore((s) => s.removeFromDelete);
+  const addDeletedStats = useDecisionStore((s) => s.addDeletedStats);
 
   async function handleDelete() {
     try {
+      const assetsInfo = await Promise.all(
+        toDelete.map((p) => MediaLibrary.getAssetInfoAsync(p.id)),
+      );
+      const totalSize = assetsInfo.reduce(
+        (sum, info) => sum + ((info as any).fileSize ?? 0),
+        0,
+      );
       await MediaLibrary.deleteAssetsAsync(toDelete.map((p) => p.id));
+      addDeletedStats(toDelete.length, totalSize);
       clearDelete();
     } catch (error) {
       Alert.alert("Erreur", String(error));
