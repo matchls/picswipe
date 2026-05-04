@@ -150,11 +150,18 @@ picswipe/
 ## 🚀 Pistes d'amélioration futures
 
 ### Fonctionnalités
-- Optimiser le chargement initial (pagination plutôt que `first: 10000`)
-- Persistance du store entre sessions (zustand + AsyncStorage middleware)
-- Animations de transition entre dossiers
-- Aperçu de la photo en plein écran au tap
+- ~~Optimiser le chargement initial (pagination plutôt que `first: 10000`)~~ ✅
+- ~~Persistance du store entre sessions (zustand + AsyncStorage middleware)~~ ✅
+- Animations de transition entre dossiers (en cours)
+- ~~Aperçu de la photo en plein écran au tap~~ ⏭ Skipped
 - Tester sur iOS (comportement `fileSize` potentiellement différent)
+
+### 🔜 À implémenter (ajoutées le 2026-05-04)
+- **Haptic feedback** — vibration légère quand on dépasse le seuil de swipe (`expo-haptics`)
+- **État vide dans Review** — message + icône quand `toDelete` est vide (déjà listé dans Design)
+- **Undo dernier swipe** — bouton pour revenir à la photo précédente (historique dans le store)
+- **Confirmation avant suppression** — dialog "Supprimer X photos ?" dans Review avant action irréversible
+- **Tout garder dans un dossier** — bouton pour skipper un dossier entier sans swiper chaque photo
 
 ### 🎨 Design & UX (ajoutées le 2026-05-04)
 
