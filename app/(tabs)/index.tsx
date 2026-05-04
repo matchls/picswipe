@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
 import SwipeCard from "../../src/components/ui/SwipeCard";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { groupPhotosByMonth } from "../../src/services/photos.service";
 import type { Asset } from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -35,11 +35,15 @@ export default function SwiperScreen() {
   const deletedCount = useDecisionStore((s) => s.deletedCount);
   const deletedSize = useDecisionStore((s) => s.deletedSize);
 
-  const folders = groupPhotosByMonth(photos);
-  const gridFolders = folders.map((section) => ({
-    title: section.title,
-    data: chunk(section.data, 3),
-  }));
+  const folders = useMemo(() => groupPhotosByMonth(photos), [photos]);
+  const gridFolders = useMemo(
+    () =>
+      folders.map((section) => ({
+        title: section.title,
+        data: chunk(section.data, 3),
+      })),
+    [folders],
+  );
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -70,7 +74,7 @@ export default function SwiperScreen() {
                       onPress={() => setSelectedFolder(folder.photos)}
                       style={styles.folderItem}
                     >
-                      <Ionicons name="folder" size={48} color="#82d37dff" />
+                      <Ionicons name="folder" size={48} color="#efc440ff" />
                       <Text style={styles.folderLabel}>{folder.label}</Text>
                       <Text style={styles.folderCount}>
                         {folder.photos.length} photos
@@ -82,7 +86,17 @@ export default function SwiperScreen() {
             />
           </>
         ) : currentIndex >= selectedFolder.length ? (
-          <Text>Plus de photos !</Text>
+          <>
+            <Text>Plus de photos !</Text>
+            <Pressable
+              onPress={() => {
+                setSelectedFolder(null);
+                setCurrentIndex(0);
+              }}
+            >
+              <Text style={styles.returnButton}>Retour</Text>
+            </Pressable>
+          </>
         ) : (
           <>
             <Pressable
@@ -93,6 +107,10 @@ export default function SwiperScreen() {
             >
               <Text style={styles.returnButton}>Retour</Text>
             </Pressable>
+            <Text style={{ fontSize: 14, color: "#6b7280" }}>
+              {" "}
+              {currentIndex + 1} / {selectedFolder.length}
+            </Text>
             <SwipeCard
               key={selectedFolder[currentIndex].id}
               photo={selectedFolder[currentIndex]}
