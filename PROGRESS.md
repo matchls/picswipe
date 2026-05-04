@@ -149,12 +149,30 @@ picswipe/
 
 ## 🚀 Pistes d'amélioration futures
 
+### Fonctionnalités
 - Optimiser le chargement initial (pagination plutôt que `first: 10000`)
 - Persistance du store entre sessions (zustand + AsyncStorage middleware)
 - Animations de transition entre dossiers
-- Compteur de progression dans un dossier (photo X / Y)
 - Aperçu de la photo en plein écran au tap
 - Tester sur iOS (comportement `fileSize` potentiellement différent)
+
+### 🎨 Design & UX (ajoutées le 2026-05-04)
+
+**Priorité haute**
+- **Carte de swipe** — taille fixe 300×400 trop petite ; passer à 90% de largeur / 65% de hauteur, ajouter ombre (`elevation`) et `borderRadius: 16`
+- **Labels GARDER/SUPPRIMER** — texte blanc sur fond transparent illisible ; ajouter fond semi-opaque coloré (vert/rouge), agrandir le badge, incliner style "tampon"
+- **Bouton Retour** — remplacer par `← Retour` avec icône `arrow-back`, positionné en haut à gauche
+
+**Priorité moyenne**
+- **Miniatures dans les dossiers** — remplacer l'icône dossier jaune par la première photo du dossier en miniature avec borderRadius
+- **État vide dans Review** — afficher icône + message "Aucune photo à supprimer" + bouton retour quand `toDelete` est vide
+- **Bannière de stats** — mettre en 2 cards côte à côte avec icônes plus grandes, séparées visuellement
+- **Barre de progression** — remplacer le compteur `X / Y` par une barre de progression horizontale sous la carte
+- **Spinner pendant suppression** — ajouter état `isDeleting` avec `ActivityIndicator` dans le bouton de suppression
+
+**Priorité basse**
+- **Système de couleurs** — unifier les variantes de vert dans un fichier `src/theme/colors.ts`
+- **Tab bar Review** — changer l'icône `trash-outline` pour `checkmark-circle-outline`, ajouter un badge avec `toDelete.length`
 
 ---
 
