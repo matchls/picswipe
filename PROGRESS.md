@@ -1,121 +1,78 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-01 (Step 6 complete, Step 7 bloqué erreurs dépendances)
+**Dernière mise à jour:** 2026-05-04 (Steps 1-20 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
 
 ## ✅ Ce qui est FAIT
 
-### Phase 1: Fondations - Afficher une photo du téléphone
+### Phase 1: Fondations
 
-- ✅ **Step 1 COMPLETED:** Configurer Expo Router et les onglets
-  - `app/_layout.tsx` créé avec GestureHandlerRootView et Stack
-  - `app/(tabs)/_layout.tsx` créé avec Tabs navigation (2 onglets)
-  - `app/(tabs)/index.tsx` créé avec écran "Swiper"
-  - `app/(tabs)/review.tsx` créé avec écran "Review"
-  - index.ts à la racine configuré avec `import 'expo-router/entry'`
-  - App.tsx supprimé (plus nécessaire avec Expo Router)
-  - App.json: `newArchEnabled: false` (résout erreur Android)
-  - Erreur "@react-native-masked-view" résolue avec `npm install`
+- ✅ **Step 1:** Configurer Expo Router et les onglets
+- ✅ **Step 2:** Créer `src/services/photos.service.ts`
+- ✅ **Step 3:** Afficher une photo dans index.tsx
+- ✅ **Step 4:** Créer `usePhotoLibrary` hook
+- ✅ **Step 5:** FlatList avec pagination
 
-- ✅ **Step 2 COMPLETED:** Créer `src/services/photos.service.ts`
-  - Fonctions `getPhotosFromLibrary()` et `getPhotoById()` implémentées
-  - Gestion des permissions avec MediaLibrary.requestPermissionsAsync()
+### Phase 2: Affichage
 
-- ✅ **Step 3 COMPLETED:** Afficher une photo dans index.tsx
-  - useState<Asset[]> pour stocker les photos
-  - useEffect pour charger au mount
-  - Affichage conditionnel (loading, erreur, photo)
-  - Une vraie photo du téléphone s'affiche!
-
-- ✅ **Step 4 COMPLETED:** Créer usePhotoLibrary hook
-  - Extraction de la logique photo loading de index.tsx dans src/hooks/usePhotoLibrary.ts
-  - Hook retourne { photos, isLoading, error }
-  - index.tsx simplifié avec le hook
-
-- ✅ **Step 5 COMPLETED:** FlatList avec pagination
-  - Remplacé <Image> unique par <FlatList> dans index.tsx
-  - keyExtractor: (photo) => photo.id
-  - renderItem affiche chaque photo (300x400)
-  - 20 photos chargées initialement
-
----
-
-## ⏳ À FAIRE (ordre d'exécution)
-
-### Phase 2: Affichage des photos
-
-- ✅ **Step 6 COMPLETED:** Créer SwipeCard component
-  - Composant réutilisable avec Image + deux boutons (Garder/Supprimer)
-  - Styling avec React Native StyleSheet (vert/rouge)
-  - Intégré dans FlatList renderItem
+- ✅ **Step 6:** Créer `SwipeCard` component (Image + boutons Garder/Supprimer)
 
 ### Phase 3: Swipe (CORE)
 
-- 🔄 **Step 7 IN PROGRESS:** GestureDetector + Gesture.Pan() basique
-  - SwipeCard.tsx a GestureDetector + Gesture.Pan().onUpdate() prêt
-  - Bloqué: erreurs de dépendances (voir section Erreurs ci-dessous)
-- Step 8: useSwipeGesture hook
-- Step 9: Animations avec reanimated
-- Step 10: Retour élastique (spring)
-- Step 11: Rotation et labels
+- ✅ **Step 7:** GestureDetector + Gesture.Pan() validé (logs translationX)
+- ✅ **Step 8:** `useSwipeGesture` hook extrait de SwipeCard
+- ✅ **Step 9:** Animation translateX avec `useAnimatedStyle` (thread UI natif)
+- ✅ **Step 10:** Retour élastique (`withSpring`) ou envol (`withTiming`) selon seuil 150px
+- ✅ **Step 11:** Rotation de la carte + labels GARDER/SUPPRIMER animés
 
 ### Phase 4: Persistance
 
-- Step 12: Zustand store
-- Step 13: AsyncStorage service
-- Step 14: useDecisionStore hook
-- Step 15: Connecter swipe à persistance
+- ✅ **Step 12:** Zustand store (`useDecisionStore`) avec `toKeep` et `toDelete`
+- ✅ **Step 13:** Swipe connecté au store via `runOnJS` (bridge UI thread → JS thread)
 
 ### Phase 5: Review + Suppression
 
-- Step 16: app/(tabs)/review.tsx
-- Step 17: PhotoGrid component
-- Step 18: getMultiplePhotos() fonction
-- Step 19: Afficher images sur review
-- Step 20: deletePhotosFromDevice() vraie suppression
+- ✅ **Step 14:** Écran Review avec grille de miniatures (photos à supprimer)
+- ✅ **Step 15:** Suppression réelle avec `MediaLibrary.deleteAssetsAsync`
 
-### Phase 6: Polish
+### Phase 6: Polish + Nouvelles fonctionnalités
 
-- Step 21: Feedback visuel banner
-- Step 22: Edge cases (lib vide, permission refusée)
-- Step 23: Constantes (layout.ts, colors.ts)
-- Step 24: Tester sur device réel
+- ✅ **Step 16:** Fix labels — positionnés en dehors de l'`Animated.View`, restent fixes pendant le swipe
+- ✅ **Step 17:** Une photo à la fois — remplace FlatList, avance au swipe via `onSwipeComplete` callback
+- ✅ **Step 18:** Dossiers par mois/année — `groupPhotosByMonth()` retourne des sections pour `SectionList`
+- ✅ **Step 18b:** Grille de dossiers — 2 colonnes par année, icônes Ionicons, chunk() helper
+- ✅ **Step 19:** Annuler une décision — `removeFromDelete(id)` dans le store, tap sur miniature dans Review
+- ✅ **Step 20:** Bannière de stats — total photos, suppressions cumulées, espace récupéré (estimé 3Mo/photo sur Android)
 
 ---
 
-## 📁 Structure du projet (créée)
+## 📁 Structure du projet
 
 ```
 picswipe/
 ├── app/
-│   ├── _layout.tsx                 ✅ Racine avec providers
+│   ├── _layout.tsx                 ✅ GestureHandlerRootView + Stack
 │   └── (tabs)/
 │       ├── _layout.tsx             ✅ Config tabs
-│       ├── index.tsx               ✅ Écran Swiper
-│       └── review.tsx              ✅ Écran Review
+│       ├── index.tsx               ✅ Swiper — grille dossiers + vue swipe + stats
+│       └── review.tsx              ✅ Grille photos à supprimer + suppression
 ├── src/
 │   ├── services/
-│   │   └── photos.service.ts       🔄 EN COURS
+│   │   └── photos.service.ts       ✅ getPhotosFromLibrary, groupPhotosByMonth
 │   ├── hooks/
+│   │   ├── usePhotoLibrary.ts      ✅ Charge toutes les photos
+│   │   └── useSwipeGesture.ts      ✅ Pan gesture + spring/timing + runOnJS callbacks
 │   ├── components/
-│   │   ├── ui/
-│   │   └── features/
-│   ├── store/
-│   ├── types/
-│   │   └── index.ts
-│   └── constants/
-│       ├── layout.ts
-│       └── colors.ts
-├── assets/
-├── app.json                        ✅ Configuré
-├── tsconfig.json
+│   │   └── ui/
+│   │       └── SwipeCard.tsx       ✅ Carte animée + labels GARDER/SUPPRIMER
+│   └── store/
+│       └── useDecisionStore.ts     ✅ toKeep, toDelete, stats suppression
+├── app.json                        ✅ newArchEnabled: true
 ├── package.json                    ✅ Dépendances installées
-├── index.ts                        ✅ Configuré
-├── PROGRESS.md                     ← Tu es là
-└── CLAUDE.md                       (sera créé bientôt)
+└── PROGRESS.md                     ← Tu es là
 ```
 
 ---
@@ -123,57 +80,59 @@ picswipe/
 ## 📦 Stack & Conventions
 
 **Stack:**
-
 - React Native 0.81.5
 - Expo 54.0.33
-- Expo Router 55.0.13
+- Expo Router 6.0.23
 - TypeScript 5.9.2
 - Zustand 5.0.12
-- React Native Gesture Handler 2.31.1
-- React Native Reanimated 4.3.0
-- AsyncStorage 3.0.2
-- Expo Media Library 55.0.15
+- React Native Gesture Handler 2.28.0
+- React Native Reanimated 4.1.1
+- AsyncStorage 2.2.0
+- Expo Media Library 18.2.1
+- @expo/vector-icons 15.0.3
 
 **Conventions de code:**
-
 - camelCase pour tous les noms de variables/fonctions
 - Variables en anglais
 - Commentaires en anglais (uniquement quand c'est utile)
-- Noms explicites (pas d'abréviations: `photosToDelete` pas `ptd`)
-- Pas d'over-engineering: code lisible avant perfect
+- Noms explicites (`photosToDelete` pas `ptd`)
+- Pas d'over-engineering : code lisible avant perfect
 
 **Approche:**
-
 - L'utilisateur code, Claude guide (instructions, pas de code)
-- Débug: exploration codebase, puis solutions
-- Focus sur apprentissage React Native spécifique (gestes, animations, permissions)
+- Débug : exploration codebase, puis solutions
+- Focus sur apprentissage React Native (gestes, animations, permissions)
 
 ---
 
-## 🎯 Concepts clés à maîtriser
+## 🎯 Concepts clés maîtrisés
 
-1. **Thread JS vs UI Thread** - Reanimated anime sur le thread natif
-2. **Permissions mobiles** - MediaLibrary.requestPermissionsAsync()
-3. **FlatList vs ScrollView** - Virtualisation pour grandes listes
-4. **Flexbox layout** - Seul système de layout disponible
-5. **SharedValue + useAnimatedStyle** - Animations 60fps performantes
-6. **Services vs Hooks** - Services = logique pure, Hooks = orchestration React
-7. **Zustand store** - État global minimaliste
-8. **AsyncStorage** - Persistance clé/valeur du téléphone
+1. **Thread JS vs UI Thread** — Reanimated anime sur le thread natif, `runOnJS` pour revenir au JS
+2. **Permissions mobiles** — `MediaLibrary.requestPermissionsAsync()`
+3. **SharedValue + useAnimatedStyle** — Animations 60fps performantes
+4. **Services vs Hooks** — Services = logique pure, Hooks = orchestration React
+5. **Zustand store** — État global minimaliste sans boilerplate Redux
+6. **Callbacks comme props** — Le parent décide quoi faire, l'enfant notifie
+7. **key prop React** — Force le remount d'un composant pour réinitialiser son état
+8. **Promise.all** — Appels API parallèles
+9. **SectionList** — Listes avec headers de sections (années/mois)
+10. **position: absolute** — Nécessite un parent avec dimensions explicites
 
 ---
 
 ## 🔧 Erreurs rencontrées et solutions
 
-| Erreur                                                 | Cause                                                         | Solution                              |
-| ------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------- |
-| "java.lang.string cannot be cast to java.lang.boolean" | `newArchEnabled: true` incompatible avec certaines librairies | `newArchEnabled: false` dans app.json |
-| "@react-native-masked-view" missing                    | Dépendance indirecte non installée                            | `npm install`                         |
-| `app/index.tsx` conflictuelle                          | Routing confus avec app/(tabs)                                | Supprimer app/index.tsx               |
-| TurboModule "installTurboModule" error                 | reanimated@4.x nécessite newArchEnabled: true                 | `newArchEnabled: true` dans app.json  |
-| Cannot find module 'react-native-worklets/plugin'      | npx expo install a supprimé react-native-worklets             | `npm install react-native-worklets --legacy-peer-deps` |
-| Unable to resolve "expo-linking"                       | npm install cassé par conflits peer deps                      | `rm -rf node_modules && npm install --legacy-peer-deps` |
-| Asset not imported in usePhotoLibrary.ts               | useState<Asset[]> sans import Asset                           | Ajouter `import type { Asset } from "expo-media-library"` |
+| Erreur | Cause | Solution |
+|--------|-------|----------|
+| `newArchEnabled` incompatible | reanimated@4.x nécessite nouvelle architecture | `newArchEnabled: true` dans app.json |
+| `Unable to resolve "expo-linking"` | Dépendance transitive non installée | Ajouter `expo-linking` dans package.json |
+| react/react-dom version conflict | react@19.1.0 vs react-dom@19.2.5 | `--legacy-peer-deps` à chaque install |
+| Node version warnings | Node 18 < Node 20 requis | Mettre à jour Node via nvm |
+| Crash au swipe (runOnJS) | Callback JS appelé depuis worklet UI | Wrapper avec `runOnJS(fn)()` |
+| Labels bougent avec la carte | Labels dans l'Animated.View | Sortir les labels du Animated.View |
+| Nouvelle photo invisible au swipe | React réutilise le composant, translateX figé | Ajouter `key={photo.id}` sur SwipeCard |
+| `fileSize` non disponible sur Android | `getAssetsAsync` ne retourne pas fileSize | Estimation 3Mo/photo par défaut |
+| `Cannot use JSX unless --jsx flag` | VS Code ne résout pas l'extends tsconfig | Ajouter `"jsx": "react-native"` dans tsconfig.json |
 
 ---
 
@@ -184,15 +143,19 @@ picswipe/
 - [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Expo Media Library](https://docs.expo.dev/media-library/overview/)
+- [Expo Vector Icons](https://docs.expo.dev/guides/icons/)
 
 ---
 
-## 🚀 Prochaines étapes
+## 🚀 Pistes d'amélioration futures
 
-1. **Débloquer Step 7** → `rm -rf node_modules && npm install --legacy-peer-deps && npx expo start --clear`
-2. **Step 7** → Vérifier que Gesture.Pan() log les translationX dans la console
-3. **Step 8-11** → Le coeur du projet (swipe + animations)
+- Optimiser le chargement initial (pagination plutôt que `first: 10000`)
+- Persistance du store entre sessions (zustand + AsyncStorage middleware)
+- Animations de transition entre dossiers
+- Compteur de progression dans un dossier (photo X / Y)
+- Aperçu de la photo en plein écran au tap
+- Tester sur iOS (comportement `fileSize` potentiellement différent)
 
 ---
 
-**Note:** Ce fichier sera mis à jour après chaque phase complétée. Il sert de "sauvegarde" si le contexte Claude se compresse.
+**Note:** Ce fichier est mis à jour après chaque phase complétée. Il sert de "sauvegarde" si le contexte Claude se compresse.
