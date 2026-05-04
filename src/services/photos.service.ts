@@ -1,7 +1,11 @@
 import * as MediaLibrary from "expo-media-library";
 import type { Asset } from "expo-media-library";
 
-export async function getPhotosFromLibrary(): Promise<Asset[]> {
+export async function getPhotosPage(after?: string): Promise<{
+  assets: Asset[];
+  hasNextPage: boolean;
+  endCursor: string;
+}> {
   try {
     const permission = await MediaLibrary.requestPermissionsAsync();
 
@@ -10,11 +14,17 @@ export async function getPhotosFromLibrary(): Promise<Asset[]> {
     }
 
     const result = await MediaLibrary.getAssetsAsync({
-      first: 10000,
+      first: 100,
       mediaType: "photo",
       sortBy: MediaLibrary.SortBy.creationTime,
+      ...(after ? { after } : {}),
     });
-    return result.assets;
+
+    return {
+      assets: result.assets,
+      hasNextPage: result.hasNextPage,
+      endCursor: result.endCursor,
+    };
   } catch (error) {
     console.error("Error getting photos", error);
     throw error;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPhotosFromLibrary } from "../services/photos.service";
+import { getPhotosPage } from "../services/photos.service";
 import type { Asset } from "expo-media-library";
 
 export default function usePhotosLibrary() {
@@ -8,20 +8,27 @@ export default function usePhotosLibrary() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Au démarrage de l'écran, charge les photos
     const loadPhotos = async () => {
       try {
-        const result = await getPhotosFromLibrary();
-        setPhotos(result);
-        setError(null);
+        // Load first page — user sees folders immediately after this
+        const firstPage = await getPhotosPage();
+        setPhotos(firstPage.assets);
+        setIsLoading(false);
+        let cursor = firstPage.endCursor;
+        let hasMore = firstPage.hasNextPage;
+        while (hasMore) {
+          const nextPage = await getPhotosPage(cursor);
+          setPhotos((prev) => [...prev, ...nextPage.assets]);
+          cursor = nextPage.endCursor;
+          hasMore = nextPage.hasNextPage;
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
-        console.error("Failed to load photos:", error);
-      } finally {
         setIsLoading(false);
       }
     };
     loadPhotos();
   }, []);
+
   return { photos, isLoading, error };
 }
