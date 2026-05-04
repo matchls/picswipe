@@ -13,22 +13,32 @@ import { groupPhotosByMonth } from "../../src/services/photos.service";
 import type { Asset } from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import useDecisionStore from "../../src/store/useDecisionStore";
 
 function chunk<T>(arr: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
     arr.slice(i * size, i * size + size),
   );
 }
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return "0 o";
+  const k = 1024;
+  const sizes = ["o", "Ko", "Mo", "Go"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
+}
 
 export default function SwiperScreen() {
   const { photos, isLoading, error } = usePhotoLibrary();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedFolder, setSelectedFolder] = useState<Asset[] | null>(null);
+  const deletedCount = useDecisionStore((s) => s.deletedCount);
+  const deletedSize = useDecisionStore((s) => s.deletedSize);
 
   const folders = groupPhotosByMonth(photos);
   const gridFolders = folders.map((section) => ({
     title: section.title,
-    data: chunk(section.data, 2),
+    data: chunk(section.data, 3),
   }));
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -38,30 +48,39 @@ export default function SwiperScreen() {
         ) : photos.length === 0 ? (
           <Text>Aucune photo trouvée</Text>
         ) : selectedFolder === null ? (
-          <SectionList
-            sections={gridFolders}
-            keyExtractor={(row) => row.map((f) => f.label).join("-")}
-            renderSectionHeader={({ section }) => (
-              <Text style={styles.yearHeader}>{section.title}</Text>
-            )}
-            renderItem={({ item: row }) => (
-              <View style={styles.folderRow}>
-                {row.map((folder) => (
-                  <Pressable
-                    key={folder.label}
-                    onPress={() => setSelectedFolder(folder.photos)}
-                    style={styles.folderItem}
-                  >
-                    <Ionicons name="folder" size={48} color="#82d37dff" />
-                    <Text style={styles.folderLabel}>{folder.label}</Text>
-                    <Text style={styles.folderCount}>
-                      {folder.photos.length} photos
-                    </Text>
-                  </Pressable>
-                ))}
-              </View>
-            )}
-          />
+          <>
+            <View style={styles.statsCard}>
+              <Text style={styles.statText}>📷 {photos.length} photos</Text>
+              <Text style={styles.statText}>
+                🗑 {deletedCount} supprimées · {formatBytes(deletedSize)}{" "}
+                récupérés
+              </Text>
+            </View>
+            <SectionList
+              sections={gridFolders}
+              keyExtractor={(row) => row.map((f) => f.label).join("-")}
+              renderSectionHeader={({ section }) => (
+                <Text style={styles.yearHeader}>{section.title}</Text>
+              )}
+              renderItem={({ item: row }) => (
+                <View style={styles.folderRow}>
+                  {row.map((folder) => (
+                    <Pressable
+                      key={folder.label}
+                      onPress={() => setSelectedFolder(folder.photos)}
+                      style={styles.folderItem}
+                    >
+                      <Ionicons name="folder" size={48} color="#82d37dff" />
+                      <Text style={styles.folderLabel}>{folder.label}</Text>
+                      <Text style={styles.folderCount}>
+                        {folder.photos.length} photos
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              )}
+            />
+          </>
         ) : currentIndex >= selectedFolder.length ? (
           <Text>Plus de photos !</Text>
         ) : (
@@ -95,6 +114,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
   },
+  statsCard: {
+    width: "100%",
+    backgroundColor: "#f0fdf4",
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#bbf7d0",
+  },
+  statText: {
+    fontSize: 14,
+    color: "#166534",
+    marginVertical: 2,
+  },
+
   yearHeader: {
     fontSize: 20,
     fontWeight: "bold",
@@ -112,10 +144,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   folderItem: {
-    width: "50%",
+    width: "33%",
     alignItems: "center",
     padding: 12,
-    gap: 6,
+    // gap: 6,
   },
   folderLabel: {
     fontSize: 13,

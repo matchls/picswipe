@@ -41,7 +41,7 @@ export function groupPhotosByMonth(
     const year = date.getFullYear().toString();
     const label = date.toLocaleDateString("fr-FR", {
       month: "long",
-      year: "numeric",
+      // year: "numeric",
     });
     if (!groups[year]) groups[year] = {};
     if (!groups[year][label]) groups[year][label] = [];

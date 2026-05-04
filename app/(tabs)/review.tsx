@@ -23,9 +23,10 @@ export default function ReviewScreen() {
         toDelete.map((p) => MediaLibrary.getAssetInfoAsync(p.id)),
       );
       const totalSize = assetsInfo.reduce(
-        (sum, info) => sum + ((info as any).fileSize ?? 0),
+        (sum, info) => sum + ((info as any).fileSize ?? 3_000_000),
         0,
       );
+
       await MediaLibrary.deleteAssetsAsync(toDelete.map((p) => p.id));
       addDeletedStats(toDelete.length, totalSize);
       clearDelete();
