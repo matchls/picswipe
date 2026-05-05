@@ -11,6 +11,7 @@ import {
 import useDecisionStore from "../../src/store/useDecisionStore";
 import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -62,37 +63,39 @@ export default function ReviewScreen() {
     );
   }
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={toDelete}
-        keyExtractor={(item) => item.id}
-        numColumns={3}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={() => removeFromDelete(item.id)}
-            style={styles.thumbnail}
-          >
-            <Image source={{ uri: item.uri }} style={styles.thumbnailImage} />
-            <View style={styles.removeIcon}>
-              <Text style={{ color: "white", fontWeight: "bold" }}>✕</Text>
-            </View>
-          </Pressable>
-        )}
-      ></FlatList>
-      <Pressable
-        onPress={handleDelete}
-        style={styles.deleteButton}
-        disabled={isDeleting}
-      >
-        {isDeleting ? (
-          <ActivityIndicator color="white" />
-        ) : (
-          <Text style={styles.deleteButtonText}>
-            Supprimer {toDelete.length} photo(s)
-          </Text>
-        )}
-      </Pressable>
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <FlatList
+          data={toDelete}
+          keyExtractor={(item) => item.id}
+          numColumns={3}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => removeFromDelete(item.id)}
+              style={styles.thumbnail}
+            >
+              <Image source={{ uri: item.uri }} style={styles.thumbnailImage} />
+              <View style={styles.removeIcon}>
+                <Text style={{ color: "white", fontWeight: "bold" }}>✕</Text>
+              </View>
+            </Pressable>
+          )}
+        ></FlatList>
+        <Pressable
+          onPress={handleDelete}
+          style={styles.deleteButton}
+          disabled={isDeleting}
+        >
+          {isDeleting ? (
+            <ActivityIndicator color="white" />
+          ) : (
+            <Text style={styles.deleteButtonText}>
+              Supprimer {toDelete.length} photo(s)
+            </Text>
+          )}
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
