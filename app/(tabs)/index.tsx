@@ -111,10 +111,16 @@ export default function SwiperScreen() {
             >
               <Text style={styles.returnButton}>Retour</Text>
             </Pressable>
-            <Text style={{ fontSize: 14, color: "#6b7280" }}>
-              {" "}
-              {currentIndex + 1} / {selectedFolder.length}
-            </Text>
+            <View style={styles.progressBarContainer}>
+              <View
+                style={[
+                  styles.progressBarFill,
+                  {
+                    width: `${((currentIndex + 1) / selectedFolder.length) * 100}%`,
+                  },
+                ]}
+              />
+            </View>
             <SwipeCard
               key={selectedFolder[currentIndex].id}
               photo={selectedFolder[currentIndex]}
@@ -183,5 +189,18 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 8,
+  },
+  progressBarContainer: {
+    width: "90%",
+    height: 6,
+    backgroundColor: "#e5e7eb",
+    borderRadius: 3,
+    marginBottom: 12,
+    overflow: "hidden",
+  },
+  progressBarFill: {
+    height: "100%",
+    backgroundColor: "#22c55e",
+    borderRadius: 3,
   },
 });
