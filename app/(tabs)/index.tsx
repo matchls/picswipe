@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import useDecisionStore from "../../src/store/useDecisionStore";
 import { colors } from "../../src/theme/colors";
+import { AppHeader } from "../../src/components/ui/AppHeader";
 
 function chunk<T>(arr: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -44,12 +45,13 @@ export default function SwiperScreen() {
     () =>
       folders.map((section) => ({
         title: section.title,
-        data: chunk(section.data, 3),
+        data: chunk(section.data, 4),
       })),
     [folders],
   );
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <AppHeader />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         {isLoading ? (
           <ActivityIndicator size="large" />
@@ -188,11 +190,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
-    width: "90%",
+    width: "100%",
     margin: "auto",
     padding: 10,
-    backgroundColor: colors.green.dark,
-    borderRadius: 5,
+    backgroundColor: colors.green.light,
     textAlign: "center",
   },
   folderRow: {
@@ -201,7 +202,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   folderItem: {
-    width: "33%",
     alignItems: "center",
     padding: 12,
   },

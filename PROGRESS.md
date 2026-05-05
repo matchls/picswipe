@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-05 (Steps 1-27 complétés)
+**Dernière mise à jour:** 2026-05-05 (Steps 1-32 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -57,6 +57,8 @@
 - ✅ **Step 29:** Undo dernier swipe — `lastDecision` dans le store + bouton Annuler, `useMemo` sur styles SwipeCard
 - ✅ **Step 30:** Badge sur l'onglet Review — `tabBarBadge` avec `toDelete.length`
 - ✅ **Step 31:** Système de couleurs — `src/theme/colors.ts`, toutes les couleurs centralisées
+- ✅ **Step 32:** Bannière app — composant `AppHeader` partagé avec le nom "PicSwipe", affiché sur les deux onglets
+- 🔜 **Step 33:** Indicateur de chargement dans les stats — afficher un spinner pendant que `isLoading` est true, avant que le compteur de photos soit disponible
 
 ---
 

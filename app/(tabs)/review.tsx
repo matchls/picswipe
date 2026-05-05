@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { AppHeader } from "../../src/components/ui/AppHeader";
 
 export default function ReviewScreen() {
   const toDelete = useDecisionStore((s) => s.toDelete);
@@ -57,14 +58,22 @@ export default function ReviewScreen() {
   }
   if (toDelete.length === 0) {
     return (
-      <View style={styles.emptyContainer}>
-        <Ionicons name="checkmark-circle-outline" size={80} color={colors.green.primary} />
-        <Text style={styles.emptyText}>Aucune photo à supprimer</Text>
-      </View>
+      <SafeAreaView style={{ flex: 1 }}>
+        <AppHeader />
+        <View style={styles.emptyContainer}>
+          <Ionicons
+            name="checkmark-circle-outline"
+            size={80}
+            color={colors.green.primary}
+          />
+          <Text style={styles.emptyText}>Aucune photo à supprimer</Text>
+        </View>
+      </SafeAreaView>
     );
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <AppHeader></AppHeader>
       <View style={styles.container}>
         <FlatList
           data={toDelete}
