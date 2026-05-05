@@ -5,6 +5,7 @@ import {
   runOnJS,
 } from "react-native-reanimated";
 import { Gesture } from "react-native-gesture-handler";
+import * as Haptics from "expo-haptics";
 
 export default function useSwipeGesture(
   onSwipeRight: () => void,
@@ -12,9 +13,19 @@ export default function useSwipeGesture(
   onSwipeComplete: () => void,
 ) {
   const translateX = useSharedValue(0);
+  const hasFiredHaptic = useSharedValue(false);
   const gesture = Gesture.Pan()
     .onUpdate((event) => {
       translateX.value = event.translationX;
+      if (Math.abs(event.translationX) > 100 && !hasFiredHaptic.value) {
+        hasFiredHaptic.value = true;
+        runOnJS(Haptics.notificationAsync)(
+          Haptics.NotificationFeedbackType.Success,
+        );
+      }
+      if (Math.abs(event.translationX) <= 100) {
+        hasFiredHaptic.value = false;
+      }
     })
     .onEnd((event) => {
       if (Math.abs(event.translationX) > 100) {
@@ -32,6 +43,7 @@ export default function useSwipeGesture(
       } else {
         translateX.value = withSpring(0);
       }
+      hasFiredHaptic.value = false;
     });
   return { gesture, translateX };
 }

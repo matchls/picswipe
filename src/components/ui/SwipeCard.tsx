@@ -1,5 +1,12 @@
 import { Asset } from "expo-media-library";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
 import Animated from "react-native-reanimated";
 import {
@@ -16,6 +23,9 @@ interface Props {
 }
 
 export default function SwipeCard({ photo, onSwipeComplete }: Props) {
+  const { width, height } = useWindowDimensions();
+  const CARD_WIDTH = width * 0.9;
+  const CARD_HEIGHT = height * 0.65;
   const { addKeep, addDelete } = useDecisionStore();
   const { gesture, translateX } = useSwipeGesture(
     () => addKeep({ id: photo.id, uri: photo.uri }),
@@ -47,6 +57,48 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
       Extrapolation.CLAMP,
     ),
   }));
+  const styles = StyleSheet.create({
+    wrapper: {
+      width: CARD_WIDTH,
+      height: CARD_HEIGHT,
+      position: "relative",
+    },
+    card: {
+      alignItems: "center",
+      position: "relative",
+    },
+    image: {
+      width: CARD_WIDTH,
+      height: CARD_HEIGHT,
+      borderRadius: 16,
+    },
+    label: {
+      position: "absolute",
+      top: 30,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 8,
+      borderWidth: 4,
+    },
+    labelKeep: {
+      right: 20,
+      borderColor: "#22c55e",
+      backgroundColor: "rgba(34, 197, 94, 0.25)",
+      transform: [{ rotate: "15deg" }],
+    },
+    labelDelete: {
+      left: 20,
+      borderColor: "#ef4444",
+      backgroundColor: "rgba(239, 68, 68, 0.25)",
+      transform: [{ rotate: "-15deg" }],
+    },
+    labelText: {
+      fontSize: 22,
+      fontWeight: "bold",
+      color: "white",
+      letterSpacing: 2,
+    },
+  });
   return (
     <View style={styles.wrapper}>
       <GestureDetector gesture={gesture}>
@@ -69,42 +121,3 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    alignItems: "center",
-    marginVertical: 10,
-    position: "relative",
-  },
-  wrapper: {
-    width: 300,
-    height: 400,
-    position: "relative",
-  },
-  image: {
-    width: 300,
-    height: 400,
-    borderRadius: 8,
-  },
-  label: {
-    position: "absolute",
-    top: 20,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 6,
-    borderWidth: 3,
-  },
-  labelKeep: {
-    right: 20,
-    borderColor: "#22c55e",
-  },
-  labelDelete: {
-    left: 20,
-    borderColor: "#ef4444",
-  },
-  labelText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "white",
-  },
-});
