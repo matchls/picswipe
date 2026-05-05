@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   SectionList,
+  Image,
 } from "react-native";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
 import SwipeCard from "../../src/components/ui/SwipeCard";
@@ -74,7 +75,10 @@ export default function SwiperScreen() {
                       onPress={() => setSelectedFolder(folder.photos)}
                       style={styles.folderItem}
                     >
-                      <Ionicons name="folder" size={48} color="#efc440ff" />
+                      <Image
+                        source={{ uri: folder.photos[0].uri }}
+                        style={styles.folderThumbnail}
+                      />
                       <Text style={styles.folderLabel}>{folder.label}</Text>
                       <Text style={styles.folderCount}>
                         {folder.photos.length} photos
@@ -165,7 +169,6 @@ const styles = StyleSheet.create({
     width: "33%",
     alignItems: "center",
     padding: 12,
-    // gap: 6,
   },
   folderLabel: {
     fontSize: 13,
@@ -175,5 +178,10 @@ const styles = StyleSheet.create({
   folderCount: {
     fontSize: 11,
     color: "#6b7280",
+  },
+  folderThumbnail: {
+    width: 64,
+    height: 64,
+    borderRadius: 8,
   },
 });
