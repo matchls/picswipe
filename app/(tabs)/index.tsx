@@ -35,6 +35,8 @@ export default function SwiperScreen() {
   const [selectedFolder, setSelectedFolder] = useState<Asset[] | null>(null);
   const deletedCount = useDecisionStore((s) => s.deletedCount);
   const deletedSize = useDecisionStore((s) => s.deletedSize);
+  const undoLast = useDecisionStore((s) => s.undoLast);
+  const lastDecision = useDecisionStore((s) => s.lastDecision);
 
   const folders = useMemo(() => groupPhotosByMonth(photos), [photos]);
   const gridFolders = useMemo(
@@ -97,11 +99,12 @@ export default function SwiperScreen() {
                 setSelectedFolder(null);
                 setCurrentIndex(0);
               }}
-            ></Pressable>
-            <View style={styles.returnButton}>
-              <Ionicons name="arrow-back" size={18} color="white" />
-              <Text style={styles.returnButtonText}>Retour</Text>
-            </View>
+            >
+              <View style={styles.returnButton}>
+                <Ionicons name="arrow-back" size={18} color="white" />
+                <Text style={styles.returnButtonText}>Retour</Text>
+              </View>
+            </Pressable>
           </>
         ) : (
           <>
@@ -110,11 +113,12 @@ export default function SwiperScreen() {
                 setSelectedFolder(null);
                 setCurrentIndex(0);
               }}
-            ></Pressable>
-            <View style={styles.returnButton}>
-              <Ionicons name="arrow-back" size={18} color="white" />
-              <Text style={styles.returnButtonText}>Retour</Text>
-            </View>
+            >
+              <View style={styles.returnButton}>
+                <Ionicons name="arrow-back" size={18} color="white" />
+                <Text style={styles.returnButtonText}>Retour</Text>
+              </View>
+            </Pressable>
             <View style={styles.progressBarContainer}>
               <View
                 style={[
@@ -125,6 +129,20 @@ export default function SwiperScreen() {
                 ]}
               />
             </View>
+            <Pressable
+              onPress={() => {
+                undoLast();
+                setCurrentIndex((i) => Math.max(0, i - 1));
+              }}
+              disabled={!lastDecision}
+              style={[
+                styles.undoButton,
+                !lastDecision && styles.undoButtonDisabled,
+              ]}
+            >
+              <Ionicons name="arrow-undo" size={18} color="white" />
+              <Text style={styles.undoButtonText}>Annuler</Text>
+            </Pressable>
             <SwipeCard
               key={selectedFolder[currentIndex].id}
               photo={selectedFolder[currentIndex]}
@@ -213,5 +231,23 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#22c55e",
     borderRadius: 3,
+  },
+  undoButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: "#6b7280",
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  undoButtonDisabled: {
+    opacity: 0.4,
+  },
+  undoButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
   },
 });
