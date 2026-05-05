@@ -97,9 +97,11 @@ export default function SwiperScreen() {
                 setSelectedFolder(null);
                 setCurrentIndex(0);
               }}
-            >
-              <Text style={styles.returnButton}>Retour</Text>
-            </Pressable>
+            ></Pressable>
+            <View style={styles.returnButton}>
+              <Ionicons name="arrow-back" size={18} color="white" />
+              <Text style={styles.returnButtonText}>Retour</Text>
+            </View>
           </>
         ) : (
           <>
@@ -108,9 +110,11 @@ export default function SwiperScreen() {
                 setSelectedFolder(null);
                 setCurrentIndex(0);
               }}
-            >
-              <Text style={styles.returnButton}>Retour</Text>
-            </Pressable>
+            ></Pressable>
+            <View style={styles.returnButton}>
+              <Ionicons name="arrow-back" size={18} color="white" />
+              <Text style={styles.returnButtonText}>Retour</Text>
+            </View>
             <View style={styles.progressBarContainer}>
               <View
                 style={[
@@ -135,12 +139,19 @@ export default function SwiperScreen() {
 
 const styles = StyleSheet.create({
   returnButton: {
-    fontWeight: "bold",
-    backgroundColor: "#82d37dff",
-    padding: 16,
-    margin: 16,
-    borderRadius: 8,
+    flexDirection: "row",
     alignItems: "center",
+    gap: 6,
+    backgroundColor: "#82d37dff",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    margin: 16,
+  },
+  returnButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
   },
   statsCard: {
     width: "100%",

@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-04 (Steps 1-20 complétés)
+**Dernière mise à jour:** 2026-05-05 (Steps 1-27 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -46,6 +46,13 @@
 - ✅ **Step 18b:** Grille de dossiers — 2 colonnes par année, icônes Ionicons, chunk() helper
 - ✅ **Step 19:** Annuler une décision — `removeFromDelete(id)` dans le store, tap sur miniature dans Review
 - ✅ **Step 20:** Bannière de stats — total photos, suppressions cumulées, espace récupéré (estimé 3Mo/photo sur Android)
+- ✅ **Step 21:** Haptic feedback — `expo-haptics` avec guard `hasFiredHaptic` (une vibration par franchissement de seuil)
+- ✅ **Step 22:** SwipeCard redesign — 90% largeur / 65% hauteur via `useWindowDimensions`, `borderRadius: 16`
+- ✅ **Step 23:** Labels GARDER/SUPPRIMER — fond semi-opaque coloré, rotation style tampon, texte agrandi
+- ✅ **Step 24:** Confirmation + spinner avant suppression — `Alert.alert()` + `isDeleting` avec `ActivityIndicator`
+- ✅ **Step 25:** Miniatures dans les dossiers — `photos[0].uri` remplace l'icône dossier jaune
+- ✅ **Step 26:** État vide dans Review — icône + message quand `toDelete` est vide
+- ✅ **Step 27:** Barre de progression — remplace le compteur X/Y par une barre horizontale sous la carte
 
 ---
 
@@ -156,28 +163,26 @@ picswipe/
 - ~~Aperçu de la photo en plein écran au tap~~ ⏭ Skipped
 - Tester sur iOS (comportement `fileSize` potentiellement différent)
 
-### 🔜 À implémenter (ajoutées le 2026-05-04)
-- **Haptic feedback** — vibration légère quand on dépasse le seuil de swipe (`expo-haptics`)
-- **État vide dans Review** — message + icône quand `toDelete` est vide (déjà listé dans Design)
+### 🔜 À implémenter
+
+- ~~**Haptic feedback**~~ ✅ Step 21
+- ~~**État vide dans Review**~~ ✅ Step 26
+- ~~**Confirmation avant suppression**~~ ✅ Step 24
 - **Undo dernier swipe** — bouton pour revenir à la photo précédente (historique dans le store)
-- **Confirmation avant suppression** — dialog "Supprimer X photos ?" dans Review avant action irréversible
 - **Tout garder dans un dossier** — bouton pour skipper un dossier entier sans swiper chaque photo
 
-### 🎨 Design & UX (ajoutées le 2026-05-04)
+### 🎨 Design & UX
 
-**Priorité haute**
-- **Carte de swipe** — taille fixe 300×400 trop petite ; passer à 90% de largeur / 65% de hauteur, ajouter ombre (`elevation`) et `borderRadius: 16`
-- **Labels GARDER/SUPPRIMER** — texte blanc sur fond transparent illisible ; ajouter fond semi-opaque coloré (vert/rouge), agrandir le badge, incliner style "tampon"
-- **Bouton Retour** — remplacer par `← Retour` avec icône `arrow-back`, positionné en haut à gauche
+**Fait**
+- ~~**Carte de swipe**~~ ✅ Step 22
+- ~~**Labels GARDER/SUPPRIMER**~~ ✅ Step 23
+- ~~**Bouton Retour**~~ — Step 28 (en cours)
+- ~~**Miniatures dans les dossiers**~~ ✅ Step 25
+- ~~**Barre de progression**~~ ✅ Step 27
+- ~~**Spinner pendant suppression**~~ ✅ Step 24
 
-**Priorité moyenne**
-- **Miniatures dans les dossiers** — remplacer l'icône dossier jaune par la première photo du dossier en miniature avec borderRadius
-- **État vide dans Review** — afficher icône + message "Aucune photo à supprimer" + bouton retour quand `toDelete` est vide
+**Reste à faire**
 - **Bannière de stats** — mettre en 2 cards côte à côte avec icônes plus grandes, séparées visuellement
-- **Barre de progression** — remplacer le compteur `X / Y` par une barre de progression horizontale sous la carte
-- **Spinner pendant suppression** — ajouter état `isDeleting` avec `ActivityIndicator` dans le bouton de suppression
-
-**Priorité basse**
 - **Système de couleurs** — unifier les variantes de vert dans un fichier `src/theme/colors.ts`
 - **Tab bar Review** — changer l'icône `trash-outline` pour `checkmark-circle-outline`, ajouter un badge avec `toDelete.length`
 
