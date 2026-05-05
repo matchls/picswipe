@@ -53,6 +53,10 @@
 - ✅ **Step 25:** Miniatures dans les dossiers — `photos[0].uri` remplace l'icône dossier jaune
 - ✅ **Step 26:** État vide dans Review — icône + message quand `toDelete` est vide
 - ✅ **Step 27:** Barre de progression — remplace le compteur X/Y par une barre horizontale sous la carte
+- ✅ **Step 28:** Bouton Retour avec icône `arrow-back` Ionicons
+- ✅ **Step 29:** Undo dernier swipe — `lastDecision` dans le store + bouton Annuler, `useMemo` sur styles SwipeCard
+- ✅ **Step 30:** Badge sur l'onglet Review — `tabBarBadge` avec `toDelete.length`
+- ✅ **Step 31:** Système de couleurs — `src/theme/colors.ts`, toutes les couleurs centralisées
 
 ---
 

@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import useDecisionStore from "../../src/store/useDecisionStore";
+import { colors } from "../../src/theme/colors";
 
 export default function TabLayout() {
   const toDeleteCount = useDecisionStore((s) => s.toDelete.length);
@@ -8,8 +9,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#82d37dff",
-        tabBarInactiveTintColor: "#81d37d75",
+        tabBarActiveTintColor: colors.green.primary,
+        tabBarInactiveTintColor: colors.green.border,
       }}
     >
       <Tabs.Screen

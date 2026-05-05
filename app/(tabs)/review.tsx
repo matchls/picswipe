@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import useDecisionStore from "../../src/store/useDecisionStore";
+import { colors } from "../../src/theme/colors";
 import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -57,7 +58,7 @@ export default function ReviewScreen() {
   if (toDelete.length === 0) {
     return (
       <View style={styles.emptyContainer}>
-        <Ionicons name="checkmark-circle-outline" size={80} color="#22c55e" />
+        <Ionicons name="checkmark-circle-outline" size={80} color={colors.green.primary} />
         <Text style={styles.emptyText}>Aucune photo à supprimer</Text>
       </View>
     );
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   deleteButton: {
-    backgroundColor: "#ef4444",
+    backgroundColor: colors.red.primary,
     padding: 16,
     margin: 16,
     borderRadius: 8,
@@ -144,6 +145,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    color: "#6b7280",
+    color: colors.gray.medium,
   },
 });

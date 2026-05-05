@@ -17,6 +17,7 @@ import {
 import useSwipeGesture from "../../hooks/useSwipeGesture";
 import useDecisionStore from "../../store/useDecisionStore";
 import { useMemo } from "react";
+import { colors } from "../../theme/colors";
 
 interface Props {
   photo: Asset;
@@ -86,13 +87,13 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
         },
         labelKeep: {
           right: 20,
-          borderColor: "#22c55e",
+          borderColor: colors.green.primary,
           backgroundColor: "rgba(34, 197, 94, 0.25)",
           transform: [{ rotate: "15deg" }],
         },
         labelDelete: {
           left: 20,
-          borderColor: "#ef4444",
+          borderColor: colors.red.primary,
           backgroundColor: "rgba(239, 68, 68, 0.25)",
           transform: [{ rotate: "-15deg" }],
         },

@@ -15,6 +15,7 @@ import type { Asset } from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import useDecisionStore from "../../src/store/useDecisionStore";
+import { colors } from "../../src/theme/colors";
 
 function chunk<T>(arr: T[], size: number): T[][] {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) =>
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    backgroundColor: "#82d37dff",
+    backgroundColor: colors.green.light,
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -173,17 +174,16 @@ const styles = StyleSheet.create({
   },
   statsCard: {
     width: "100%",
-    backgroundColor: "#f0fdf4",
+    backgroundColor: colors.green.background,
     padding: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#bbf7d0",
+    borderBottomColor: colors.green.border,
   },
   statText: {
     fontSize: 14,
-    color: "#166534",
+    color: colors.green.text,
     marginVertical: 2,
   },
-
   yearHeader: {
     fontSize: 20,
     fontWeight: "bold",
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     width: "90%",
     margin: "auto",
     padding: 10,
-    backgroundColor: "#5ca056ff",
+    backgroundColor: colors.green.dark,
     borderRadius: 5,
     textAlign: "center",
   },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   },
   folderCount: {
     fontSize: 11,
-    color: "#6b7280",
+    color: colors.gray.medium,
   },
   folderThumbnail: {
     width: 64,
@@ -222,21 +222,21 @@ const styles = StyleSheet.create({
   progressBarContainer: {
     width: "90%",
     height: 6,
-    backgroundColor: "#e5e7eb",
+    backgroundColor: colors.gray.light,
     borderRadius: 3,
     marginBottom: 12,
     overflow: "hidden",
   },
   progressBarFill: {
     height: "100%",
-    backgroundColor: "#22c55e",
+    backgroundColor: colors.green.primary,
     borderRadius: 3,
   },
   undoButton: {
     flexDirection: "row",
     alignItems: "center",
     gap: 6,
-    backgroundColor: "#6b7280",
+    backgroundColor: colors.gray.medium,
     paddingVertical: 8,
     paddingHorizontal: 14,
     borderRadius: 8,
