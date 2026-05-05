@@ -12,6 +12,7 @@ import useDecisionStore from "../../src/store/useDecisionStore";
 import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ReviewScreen() {
   const toDelete = useDecisionStore((s) => s.toDelete);
@@ -50,6 +51,14 @@ export default function ReviewScreen() {
           },
         },
       ],
+    );
+  }
+  if (toDelete.length === 0) {
+    return (
+      <View style={styles.emptyContainer}>
+        <Ionicons name="checkmark-circle-outline" size={80} color="#22c55e" />
+        <Text style={styles.emptyText}>Aucune photo à supprimer</Text>
+      </View>
     );
   }
   return (
@@ -123,5 +132,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 16,
+  },
+  emptyText: {
+    fontSize: 18,
+    color: "#6b7280",
   },
 });
