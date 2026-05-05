@@ -6,33 +6,51 @@ import {
   StyleSheet,
   Alert,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import useDecisionStore from "../../src/store/useDecisionStore";
 import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
 
 export default function ReviewScreen() {
   const toDelete = useDecisionStore((s) => s.toDelete);
   const clearDelete = useDecisionStore((s) => s.clearDelete);
   const removeFromDelete = useDecisionStore((s) => s.removeFromDelete);
   const addDeletedStats = useDecisionStore((s) => s.addDeletedStats);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   async function handleDelete() {
-    try {
-      const assetsInfo = await Promise.all(
-        toDelete.map((p) => MediaLibrary.getAssetInfoAsync(p.id)),
-      );
-      const totalSize = assetsInfo.reduce(
-        (sum, info) => sum + ((info as any).fileSize ?? 3_000_000),
-        0,
-      );
-
-      await MediaLibrary.deleteAssetsAsync(toDelete.map((p) => p.id));
-      addDeletedStats(toDelete.length, totalSize);
-      clearDelete();
-    } catch (error) {
-      Alert.alert("Erreur", String(error));
-    }
+    Alert.alert(
+      "Confirmer la suppression",
+      `Supprimer ${toDelete.length} photo(s) définitivement ?`,
+      [
+        { text: "Annuler", style: "cancel" },
+        {
+          text: "Supprimer",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              setIsDeleting(true);
+              const assetsInfo = await Promise.all(
+                toDelete.map((p) => MediaLibrary.getAssetInfoAsync(p.id)),
+              );
+              const totalSize = assetsInfo.reduce(
+                (sum, info) => sum + ((info as any).fileSize ?? 3_000_000),
+                0,
+              );
+              await MediaLibrary.deleteAssetsAsync(toDelete.map((p) => p.id));
+              addDeletedStats(toDelete.length, totalSize);
+              clearDelete();
+            } catch (error) {
+              Alert.alert("Erreur", String(error));
+            } finally {
+              setIsDeleting(false);
+            }
+          },
+        },
+      ],
+    );
   }
   return (
     <View style={styles.container}>
@@ -52,10 +70,18 @@ export default function ReviewScreen() {
           </Pressable>
         )}
       ></FlatList>
-      <Pressable onPress={handleDelete} style={styles.deleteButton}>
-        <Text style={styles.deleteButtonText}>
-          Supprimer {toDelete.length} photo(s)
-        </Text>
+      <Pressable
+        onPress={handleDelete}
+        style={styles.deleteButton}
+        disabled={isDeleting}
+      >
+        {isDeleting ? (
+          <ActivityIndicator color="white" />
+        ) : (
+          <Text style={styles.deleteButtonText}>
+            Supprimer {toDelete.length} photo(s)
+          </Text>
+        )}
       </Pressable>
     </View>
   );
