@@ -1,7 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import useDecisionStore from "../../src/store/useDecisionStore";
 
 export default function TabLayout() {
+  const toDeleteCount = useDecisionStore((s) => s.toDelete.length);
   return (
     <Tabs
       screenOptions={{
@@ -26,6 +28,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="trash-outline" size={size} color={color} />
           ),
+          tabBarBadge: toDeleteCount > 0 ? toDeleteCount : undefined,
         }}
       />
     </Tabs>
