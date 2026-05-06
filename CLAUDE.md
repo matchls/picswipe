@@ -77,12 +77,14 @@ src/
 The developer is a junior coming from a 10-week bootcamp (La Capsule). Background: Node.js, Express, React, React Native + Expo. Trained in JavaScript, now learning TypeScript.
 
 **Code style guidelines:**
+
 - Write readable, junior-friendly code — not too clever, not over-engineered
 - Add comments in English when the WHY is non-obvious
 - Prefer explicit over implicit: clear variable names, simple logic
 - Avoid advanced patterns the developer hasn't seen yet
 
 **Workflow:**
+
 - All code comments must be in English
 - All git commits must be in English, using the format `type(scope): description` (e.g. `feat(store): add deletedCount tracking`)
 - Remind the developer to commit after each feature implementation
@@ -92,3 +94,12 @@ The developer is a junior coming from a 10-week bootcamp (La Capsule). Backgroun
 - `newArchEnabled: true` in `app.json` — required by Reanimated 4.x. Do not remove.
 - `GestureHandlerRootView` must wrap the entire app at the root level for gestures to work.
 - `npm install` always needs `--legacy-peer-deps` because react@19.1.0 conflicts with some peer dep declarations.
+
+Add at the top of CLAUDE.md under a '## General Behavior' section\n\n## Environment Capability Checks
+
+- Before claiming a Claude Code command, path, or plugin is unavailable, verify with `claude --help`, `claude plugin --help`, or by checking docs. Do not dismiss user-provided commands as nonexistent without evidence.
+  Add under a new '## File Naming' section, or merge into an existing Conventions/Assets section\n\n## File Naming
+- When generating image assets, match the file extension to the actual content (SVG content → .svg, PNG bytes → .png). Verify before writing and update any data references in the same change.
+  Add as a new section at the end of CLAUDE.md titled '## React Native / Expo Worktrees'\n\n## React Native / Expo Worktrees
+- Do NOT run `npm install` or start Expo dev server inside git worktrees - module resolution and TurboModule errors are common. Instead, instruct the user to run install/dev commands from the main checkout or an external terminal.
+- For reanimated/gesture-handler issues, suggest a clean `rm -rf node_modules && npm install` before attempting other fixes.
