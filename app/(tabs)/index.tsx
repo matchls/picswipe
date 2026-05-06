@@ -53,19 +53,25 @@ export default function SwiperScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <AppHeader />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        {selectedFolder === null && (
+          <View style={styles.statsCard}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={colors.green.text} />
+            ) : (
+              <Text style={styles.statText}>📷 {photos.length} photos</Text>
+            )}
+            <Text style={styles.statText}>
+              🗑 {deletedCount} supprcimées · {formatBytes(deletedSize)}{" "}
+              récupérés
+            </Text>
+          </View>
+        )}
         {isLoading ? (
           <ActivityIndicator size="large" />
         ) : photos.length === 0 ? (
           <Text>Aucune photo trouvée</Text>
         ) : selectedFolder === null ? (
           <>
-            <View style={styles.statsCard}>
-              <Text style={styles.statText}>📷 {photos.length} photos</Text>
-              <Text style={styles.statText}>
-                🗑 {deletedCount} supprimées · {formatBytes(deletedSize)}{" "}
-                récupérés
-              </Text>
-            </View>
             <SectionList
               sections={gridFolders}
               keyExtractor={(row) => row.map((f) => f.label).join("-")}

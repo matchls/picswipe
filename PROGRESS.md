@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-05 (Steps 1-32 complétés)
+**Dernière mise à jour:** 2026-05-05 (Steps 1-33 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -58,7 +58,7 @@
 - ✅ **Step 30:** Badge sur l'onglet Review — `tabBarBadge` avec `toDelete.length`
 - ✅ **Step 31:** Système de couleurs — `src/theme/colors.ts`, toutes les couleurs centralisées
 - ✅ **Step 32:** Bannière app — composant `AppHeader` partagé avec le nom "PicSwipe", affiché sur les deux onglets
-- 🔜 **Step 33:** Indicateur de chargement dans les stats — afficher un spinner pendant que `isLoading` est true, avant que le compteur de photos soit disponible
+- ✅ **Step 33:** Indicateur de chargement dans les stats — spinner pendant `isLoading`, compteur de photos ensuite
 
 ---
 
@@ -174,7 +174,7 @@ picswipe/
 - ~~**Haptic feedback**~~ ✅ Step 21
 - ~~**État vide dans Review**~~ ✅ Step 26
 - ~~**Confirmation avant suppression**~~ ✅ Step 24
-- **Undo dernier swipe** — bouton pour revenir à la photo précédente (historique dans le store)
+- ~~**Undo dernier swipe**~~ ✅ Step 29
 - **Tout garder dans un dossier** — bouton pour skipper un dossier entier sans swiper chaque photo
 
 ### 🎨 Design & UX
@@ -182,15 +182,17 @@ picswipe/
 **Fait**
 - ~~**Carte de swipe**~~ ✅ Step 22
 - ~~**Labels GARDER/SUPPRIMER**~~ ✅ Step 23
-- ~~**Bouton Retour**~~ — Step 28 (en cours)
+- ~~**Bouton Retour**~~ ✅ Step 28
 - ~~**Miniatures dans les dossiers**~~ ✅ Step 25
 - ~~**Barre de progression**~~ ✅ Step 27
 - ~~**Spinner pendant suppression**~~ ✅ Step 24
+- ~~**Bannière app "PicSwipe"**~~ ✅ Step 32
+- ~~**Système de couleurs**~~ ✅ Step 31
+- ~~**Tab bar Review badge**~~ ✅ Step 30
 
 **Reste à faire**
 - **Bannière de stats** — mettre en 2 cards côte à côte avec icônes plus grandes, séparées visuellement
-- **Système de couleurs** — unifier les variantes de vert dans un fichier `src/theme/colors.ts`
-- **Tab bar Review** — changer l'icône `trash-outline` pour `checkmark-circle-outline`, ajouter un badge avec `toDelete.length`
+- **Tout garder dans un dossier** — Step 34 à venir
 
 ---
 
