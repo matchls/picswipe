@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-05 (Steps 1-33 complétés)
+**Dernière mise à jour:** 2026-05-06 (Steps 1-33 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -192,6 +192,8 @@ picswipe/
 
 **Reste à faire**
 - **Bannière de stats** — mettre en 2 cards côte à côte avec icônes plus grandes, séparées visuellement
+- **Spinner de chargement manquant** — le logo de chargement n'apparaît pas pendant que le compteur de photos s'incrémente progressivement
+- **Ligne blanche au-dessus de la bannière** — ajouter la couleur verte au-dessus de la SafeArea pour couvrir la zone système (status bar)
 - **Tout garder dans un dossier** — Step 34 à venir
 
 ---
