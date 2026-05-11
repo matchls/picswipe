@@ -50,9 +50,16 @@ export default function SwiperScreen() {
     [folders],
   );
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.green.light }}>
       <AppHeader />
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: colors.green.background,
+        }}
+      >
         {selectedFolder === null && (
           <View style={styles.statsRow}>
             {isLoading ? (
