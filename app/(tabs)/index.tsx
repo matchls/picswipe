@@ -54,16 +54,32 @@ export default function SwiperScreen() {
       <AppHeader />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         {selectedFolder === null && (
-          <View style={styles.statsCard}>
+          <View style={styles.statsRow}>
             {isLoading ? (
               <ActivityIndicator size="small" color={colors.green.text} />
             ) : (
-              <Text style={styles.statText}>📷 {photos.length} photos</Text>
+              <View style={styles.statsCard}>
+                <Ionicons
+                  name="images-outline"
+                  size={20}
+                  style={{ marginRight: 8 }}
+                ></Ionicons>
+                <Text style={styles.statText}> {photos.length} photos</Text>
+              </View>
             )}
-            <Text style={styles.statText}>
-              🗑 {deletedCount} supprcimées · {formatBytes(deletedSize)}{" "}
-              récupérés
-            </Text>
+            <View style={styles.statsCard}>
+              <Ionicons
+                name="trash-outline"
+                size={20}
+                style={{ marginRight: 8 }}
+              ></Ionicons>
+              <View style={styles.statsTextContainer}>
+                <Text style={styles.statText}>{deletedCount} supprimées</Text>
+                <Text style={styles.statText}>
+                  {formatBytes(deletedSize)} récupérés
+                </Text>
+              </View>
+            </View>
           </View>
         )}
         {isLoading ? (
@@ -180,12 +196,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 15,
   },
-  statsCard: {
+  statsRow: {
     width: "100%",
-    backgroundColor: colors.green.background,
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.green.border,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  statsCard: {
+    flexDirection: "row",
+    flex: 1,
+    padding: 16,
+    alignItems: "center",
+  },
+  statsTextContainer: {
+    flex: 1,
+    flexDirection: "column",
   },
   statText: {
     fontSize: 14,
