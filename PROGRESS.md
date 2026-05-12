@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-12 (Steps 1-37 complétés)
+**Dernière mise à jour:** 2026-05-12 (Steps 1-38 complétés)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -63,6 +63,7 @@
 - ✅ **Step 35:** Fix barre de statut — couleur verte `backgroundColor` couvre la SafeArea (status bar) pour aligner avec le header
 - ✅ **Step 36:** Fix spinner de chargement — `isAllLoaded` démarre à `false`, passe à `true` après la boucle de pagination, spinner visible pendant le chargement progressif
 - ✅ **Step 37:** Effets de swipe redesignés — `LinearGradient` latéraux animés via `Animated.View` + `keepLabelStyle`/`deleteLabelStyle`, s'étendent jusqu'au bord de l'écran, texte vertical lettre par lettre centré
+- ✅ **Step 38:** Modale d'onboarding — `Modal` React Native au premier lancement, `hasSeenOnboarding` persisté dans Zustand, bouton info dans `AppHeader` pour rouvrir
 
 ---
 
@@ -195,8 +196,6 @@ picswipe/
 - ~~**Tab bar Review badge**~~ ✅ Step 30
 
 **Reste à faire**
-- **Boutons Retour + Annuler** — positionnés côte à côte dans un `flexDirection: "row"` avec `width: "90%"` et `justifyContent: "space-between"`
-- **Step 38 — Modale d'onboarding** — Modal React Native au premier lancement + bouton info dans AppHeader pour la rouvrir. `hasSeenOnboarding` persisté dans le store Zustand.
 - **Tout garder dans un dossier** — bouton pour skipper un dossier entier sans swiper chaque photo
 
 ---

@@ -147,6 +147,7 @@ export default function SwiperScreen() {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-around",
+                alignItems: "center",
                 width: "90%",
               }}
             >
@@ -161,6 +162,9 @@ export default function SwiperScreen() {
                   <Text style={styles.returnButtonText}>Retour</Text>
                 </View>
               </Pressable>
+              <Text>
+                {currentIndex + 1} / {selectedFolder.length}
+              </Text>
               <Pressable
                 onPress={() => {
                   undoLast();
