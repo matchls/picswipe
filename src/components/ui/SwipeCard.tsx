@@ -71,30 +71,30 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
         image: {
           width: CARD_WIDTH,
           height: CARD_HEIGHT,
-          borderRadius: 16,
-        },
-        label: {
-          position: "absolute",
-          top: 30,
-          paddingHorizontal: 16,
-          paddingVertical: 8,
           borderRadius: 8,
-          borderWidth: 4,
         },
-        labelKeep: {
-          right: 20,
-          borderColor: colors.green.primary,
-          backgroundColor: "rgba(34, 197, 94, 0.25)",
-          transform: [{ rotate: "15deg" }],
-        },
-        labelDelete: {
-          left: 20,
-          borderColor: colors.red.primary,
-          backgroundColor: "rgba(239, 68, 68, 0.25)",
-          transform: [{ rotate: "-15deg" }],
-        },
+        // label: {
+        //   position: "absolute",
+        //   top: 30,
+        //   paddingHorizontal: 16,
+        //   paddingVertical: 8,
+        //   borderRadius: 8,
+        //   borderWidth: 4,
+        // },
+        // labelKeep: {
+        //   right: 20,
+        //   borderColor: colors.green.primary,
+        //   backgroundColor: "rgba(34, 197, 94, 0.25)",
+        //   transform: [{ rotate: "15deg" }],
+        // },
+        // labelDelete: {
+        //   left: 20,
+        //   borderColor: colors.red.primary,
+        //   backgroundColor: "rgba(239, 68, 68, 0.25)",
+        //   transform: [{ rotate: "-15deg" }],
+        // },
         labelText: {
-          fontSize: 22,
+          fontSize: 30,
           fontWeight: "bold",
           color: "white",
           letterSpacing: 2,
@@ -113,41 +113,88 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
           </View>
         </Animated.View>
       </GestureDetector>
-      <LinearGradient
-        colors={["rgba(34,197,94,0)", "rgba(34,197,94,0.85)"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: 100,
-          borderTopRightRadius: 16,
-          borderBottomRightRadius: 16,
-        }}
+      <Animated.View
+        style={[
+          keepLabelStyle,
+          {
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          },
+        ]}
       >
-        <Text style={[styles.labelText, { transform: [{ rotate: "90deg" }] }]}>
-          GARDER
-        </Text>
-      </LinearGradient>
-      <LinearGradient
-        colors={["rgba(239,68,68,0.85)", "rgba(239,68,68,0)"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={{
-          position: "absolute",
-          top: 0,
-          bottom: 0,
-          left: 0,
-          width: 100,
-          borderRadius: 16,
-        }}
+        <LinearGradient
+          colors={["rgba(34,197,94,0)", "rgba(34,197,94,0.95)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            right: -(width - CARD_WIDTH) / 2,
+            width: 200,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              flex: 1,
+              alignItems: "flex-end",
+              justifyContent: "center",
+              margin: 12,
+            }}
+          >
+            {"GARDER".split("").map((letter, index) => (
+              <Text key={index} style={styles.labelText}>
+                {letter}
+              </Text>
+            ))}
+          </View>
+        </LinearGradient>
+      </Animated.View>
+      <Animated.View
+        style={[
+          deleteLabelStyle,
+          {
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          },
+        ]}
       >
-        <Text style={[styles.labelText, { transform: [{ rotate: "-90deg" }] }]}>
-          SUPPRIMER
-        </Text>
-      </LinearGradient>
+        <LinearGradient
+          colors={["rgba(239,68,68,0.95)", "rgba(239,68,68,0)"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: -(width - CARD_WIDTH) / 2,
+            width: 200,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              flex: 1,
+              margin: 12,
+              alignItems: "flex-start",
+              justifyContent: "center",
+            }}
+          >
+            {"SUPPRIMER".split("").map((letter, index) => (
+              <Text key={index} style={styles.labelText}>
+                {letter}
+              </Text>
+            ))}
+          </View>
+        </LinearGradient>
+      </Animated.View>
     </View>
   );
 }
