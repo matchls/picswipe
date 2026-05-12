@@ -15,6 +15,8 @@ type DecisionStore = {
   addDeletedStats: (count: number, size: number) => void;
   lastDecision: { photo: PhotoDecision; type: "keep" | "delete" } | null;
   undoLast: () => void;
+  hasSeenOnboarding: boolean;
+  setHasSeenOnboarding: (value: boolean) => void;
 };
 
 const useDecisionStore = create<DecisionStore>()(
@@ -61,6 +63,8 @@ const useDecisionStore = create<DecisionStore>()(
             lastDecision: null,
           };
         }),
+      hasSeenOnboarding: false,
+      setHasSeenOnboarding: (value) => set({ hasSeenOnboarding: value }),
     }),
     {
       name: "decision-store",

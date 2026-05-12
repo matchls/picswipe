@@ -73,26 +73,6 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
           height: CARD_HEIGHT,
           borderRadius: 8,
         },
-        // label: {
-        //   position: "absolute",
-        //   top: 30,
-        //   paddingHorizontal: 16,
-        //   paddingVertical: 8,
-        //   borderRadius: 8,
-        //   borderWidth: 4,
-        // },
-        // labelKeep: {
-        //   right: 20,
-        //   borderColor: colors.green.primary,
-        //   backgroundColor: "rgba(34, 197, 94, 0.25)",
-        //   transform: [{ rotate: "15deg" }],
-        // },
-        // labelDelete: {
-        //   left: 20,
-        //   borderColor: colors.red.primary,
-        //   backgroundColor: "rgba(239, 68, 68, 0.25)",
-        //   transform: [{ rotate: "-15deg" }],
-        // },
         labelText: {
           fontSize: 30,
           fontWeight: "bold",

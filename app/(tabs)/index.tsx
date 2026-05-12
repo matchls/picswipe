@@ -6,6 +6,7 @@ import {
   StyleSheet,
   SectionList,
   Image,
+  Modal,
 } from "react-native";
 import usePhotoLibrary from "../../src/hooks/usePhotoLibrary";
 import SwipeCard from "../../src/components/ui/SwipeCard";
@@ -39,6 +40,8 @@ export default function SwiperScreen() {
   const deletedSize = useDecisionStore((s) => s.deletedSize);
   const undoLast = useDecisionStore((s) => s.undoLast);
   const lastDecision = useDecisionStore((s) => s.lastDecision);
+  const hasSeenOnboarding = useDecisionStore((s) => s.hasSeenOnboarding);
+  const setHasSeenOnboarding = useDecisionStore((s) => s.setHasSeenOnboarding);
 
   const folders = useMemo(() => groupPhotosByMonth(photos), [photos]);
   const gridFolders = useMemo(
@@ -192,6 +195,91 @@ export default function SwiperScreen() {
           </>
         )}
       </View>
+      <Modal visible={!hasSeenOnboarding} transparent={true}>
+        <View
+          style={{
+            backgroundColor: "rgba(0,0,0,0.5)",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: colors.green.background,
+              height: "40%",
+              width: "90%",
+              borderRadius: 10,
+              padding: 16,
+              alignItems: "center",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 26,
+                color: colors.green.primary,
+                fontWeight: 700,
+                marginBottom: 16,
+                textAlign: "center",
+              }}
+            >
+              Bienvenue sur PicSwipe !
+            </Text>
+            <View>
+              <Text
+                style={{
+                  color: colors.green.text,
+                  marginHorizontal: 16,
+                  marginTop: 10,
+                }}
+              >
+                Swipe à droite pour garder la photo.
+              </Text>
+              <Text
+                style={{
+                  color: colors.green.text,
+                  marginHorizontal: 16,
+                  marginTop: 10,
+                }}
+              >
+                Swipe à gauche pour la supprimer.
+              </Text>
+              <Text
+                style={{
+                  color: colors.green.text,
+                  marginHorizontal: 16,
+                  marginTop: 10,
+                }}
+              >
+                Retrouve les photos à supprimer dans Review, et confirme ou
+                annule la suppression !
+              </Text>
+            </View>
+            <Pressable
+              onPress={() => setHasSeenOnboarding(true)}
+              style={{
+                backgroundColor: colors.green.light,
+                paddingHorizontal: 10,
+                paddingVertical: 5,
+                borderRadius: 8,
+                width: "50%",
+                marginTop: 30,
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: 500,
+                  textAlign: "center",
+                  fontSize: 20,
+                }}
+              >
+                C'est parti !
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
