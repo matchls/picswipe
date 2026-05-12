@@ -32,7 +32,7 @@ function formatBytes(bytes: number): string {
 }
 
 export default function SwiperScreen() {
-  const { photos, isLoading, error } = usePhotoLibrary();
+  const { photos, isLoading, error, isAllLoaded } = usePhotoLibrary();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedFolder, setSelectedFolder] = useState<Asset[] | null>(null);
   const deletedCount = useDecisionStore((s) => s.deletedCount);
@@ -62,18 +62,18 @@ export default function SwiperScreen() {
       >
         {selectedFolder === null && (
           <View style={styles.statsRow}>
-            {isLoading ? (
-              <ActivityIndicator size="small" color={colors.green.text} />
-            ) : (
-              <View style={styles.statsCard}>
-                <Ionicons
-                  name="images-outline"
-                  size={20}
-                  style={{ marginRight: 8 }}
-                ></Ionicons>
+            <View style={styles.statsCard}>
+              <Ionicons
+                name="images-outline"
+                size={20}
+                style={{ marginRight: 8 }}
+              ></Ionicons>
+              {!isAllLoaded ? (
+                <ActivityIndicator size="small" color={colors.green.text} />
+              ) : (
                 <Text style={styles.statText}> {photos.length} photos</Text>
-              </View>
-            )}
+              )}
+            </View>
             <View style={styles.statsCard}>
               <Ionicons
                 name="trash-outline"
@@ -140,17 +140,39 @@ export default function SwiperScreen() {
           </>
         ) : (
           <>
-            <Pressable
-              onPress={() => {
-                setSelectedFolder(null);
-                setCurrentIndex(0);
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                width: "90%",
               }}
             >
-              <View style={styles.returnButton}>
-                <Ionicons name="arrow-back" size={18} color="white" />
-                <Text style={styles.returnButtonText}>Retour</Text>
-              </View>
-            </Pressable>
+              <Pressable
+                onPress={() => {
+                  setSelectedFolder(null);
+                  setCurrentIndex(0);
+                }}
+              >
+                <View style={styles.returnButton}>
+                  <Ionicons name="arrow-back" size={18} color="white" />
+                  <Text style={styles.returnButtonText}>Retour</Text>
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  undoLast();
+                  setCurrentIndex((i) => Math.max(0, i - 1));
+                }}
+                disabled={!lastDecision}
+                style={[
+                  styles.undoButton,
+                  !lastDecision && styles.undoButtonDisabled,
+                ]}
+              >
+                <Ionicons name="arrow-undo" size={18} color="white" />
+                <Text style={styles.undoButtonText}>Annuler</Text>
+              </Pressable>
+            </View>
             <View style={styles.progressBarContainer}>
               <View
                 style={[
@@ -161,20 +183,7 @@ export default function SwiperScreen() {
                 ]}
               />
             </View>
-            <Pressable
-              onPress={() => {
-                undoLast();
-                setCurrentIndex((i) => Math.max(0, i - 1));
-              }}
-              disabled={!lastDecision}
-              style={[
-                styles.undoButton,
-                !lastDecision && styles.undoButtonDisabled,
-              ]}
-            >
-              <Ionicons name="arrow-undo" size={18} color="white" />
-              <Text style={styles.undoButtonText}>Annuler</Text>
-            </Pressable>
+
             <SwipeCard
               key={selectedFolder[currentIndex].id}
               photo={selectedFolder[currentIndex]}
@@ -196,12 +205,30 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
-    margin: 16,
+    marginVertical: 10,
   },
   returnButtonText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 15,
+  },
+  undoButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    backgroundColor: colors.gray.medium,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  undoButtonDisabled: {
+    opacity: 0.4,
+  },
+  undoButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 14,
   },
   statsRow: {
     width: "100%",
@@ -268,23 +295,5 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: colors.green.primary,
     borderRadius: 3,
-  },
-  undoButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    backgroundColor: colors.gray.medium,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 8,
-    marginTop: 12,
-  },
-  undoButtonDisabled: {
-    opacity: 0.4,
-  },
-  undoButtonText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 14,
   },
 });

@@ -18,6 +18,7 @@ import useSwipeGesture from "../../hooks/useSwipeGesture";
 import useDecisionStore from "../../store/useDecisionStore";
 import { useMemo } from "react";
 import { colors } from "../../theme/colors";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface Props {
   photo: Asset;
@@ -26,8 +27,8 @@ interface Props {
 
 export default function SwipeCard({ photo, onSwipeComplete }: Props) {
   const { width, height } = useWindowDimensions();
-  const CARD_WIDTH = width * 0.9;
-  const CARD_HEIGHT = height * 0.65;
+  const CARD_WIDTH = width * 0.95;
+  const CARD_HEIGHT = height * 0.75;
   const { addKeep, addDelete } = useDecisionStore();
   const { gesture, translateX } = useSwipeGesture(
     () => addKeep({ id: photo.id, uri: photo.uri }),
@@ -35,12 +36,7 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
     onSwipeComplete,
   );
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: translateX.value },
-      {
-        rotate: `${interpolate(translateX.value, [-200, 0, 200], [-15, 0, 15])}deg`,
-      },
-    ],
+    transform: [{ translateX: translateX.value }],
   }));
   const keepLabelStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
@@ -117,14 +113,41 @@ export default function SwipeCard({ photo, onSwipeComplete }: Props) {
           </View>
         </Animated.View>
       </GestureDetector>
-      <Animated.View style={[styles.label, styles.labelKeep, keepLabelStyle]}>
-        <Text style={styles.labelText}>GARDER</Text>
-      </Animated.View>
-      <Animated.View
-        style={[styles.label, styles.labelDelete, deleteLabelStyle]}
+      <LinearGradient
+        colors={["rgba(34,197,94,0)", "rgba(34,197,94,0.85)"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          right: 0,
+          width: 100,
+          borderTopRightRadius: 16,
+          borderBottomRightRadius: 16,
+        }}
       >
-        <Text style={styles.labelText}>SUPPRIMER</Text>
-      </Animated.View>
+        <Text style={[styles.labelText, { transform: [{ rotate: "90deg" }] }]}>
+          GARDER
+        </Text>
+      </LinearGradient>
+      <LinearGradient
+        colors={["rgba(239,68,68,0.85)", "rgba(239,68,68,0)"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: 100,
+          borderRadius: 16,
+        }}
+      >
+        <Text style={[styles.labelText, { transform: [{ rotate: "-90deg" }] }]}>
+          SUPPRIMER
+        </Text>
+      </LinearGradient>
     </View>
   );
 }

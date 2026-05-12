@@ -1,7 +1,7 @@
 # PicSwipe - Progression du projet
 
 **Date de démarrage:** 2026-04-29  
-**Dernière mise à jour:** 2026-05-06 (Steps 1-33 complétés)
+**Dernière mise à jour:** 2026-05-12 (Steps 1-35 complétés, Step 36 en cours)
 **Developer:** Mathieu (débutant, 10 semaines MERN)
 
 ---
@@ -59,6 +59,8 @@
 - ✅ **Step 31:** Système de couleurs — `src/theme/colors.ts`, toutes les couleurs centralisées
 - ✅ **Step 32:** Bannière app — composant `AppHeader` partagé avec le nom "PicSwipe", affiché sur les deux onglets
 - ✅ **Step 33:** Indicateur de chargement dans les stats — spinner pendant `isLoading`, compteur de photos ensuite
+- ✅ **Step 34:** Bannière de stats redesignée — 2 cards côte à côte avec icônes Ionicons, style cohérent
+- ✅ **Step 35:** Fix barre de statut — couleur verte `backgroundColor` couvre la SafeArea (status bar) pour aligner avec le header
 
 ---
 
@@ -191,10 +193,9 @@ picswipe/
 - ~~**Tab bar Review badge**~~ ✅ Step 30
 
 **Reste à faire**
-- **Bannière de stats** — mettre en 2 cards côte à côte avec icônes plus grandes, séparées visuellement
-- **Spinner de chargement manquant** — le logo de chargement n'apparaît pas pendant que le compteur de photos s'incrémente progressivement
-- **Ligne blanche au-dessus de la bannière** — ajouter la couleur verte au-dessus de la SafeArea pour couvrir la zone système (status bar)
-- **Tout garder dans un dossier** — Step 34 à venir
+- **Step 36 (en cours):** Effets de swipe redesignés — remplacement des labels overlay par des barres `LinearGradient` latérales animées (rouge = supprimer gauche, vert = garder droite). `expo-linear-gradient` installé, structure en place mais animation non branchée (`keepLabelStyle`/`deleteLabelStyle` calculés mais inutilisés).
+- **Step 36 bug:** `isAllLoaded` dans `usePhotoLibrary.ts` — logique inversée (initialisé `true` au lieu de `false`)
+- **Tout garder dans un dossier** — bouton pour skipper un dossier entier sans swiper chaque photo
 
 ---
 

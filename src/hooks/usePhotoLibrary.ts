@@ -5,6 +5,7 @@ import type { Asset } from "expo-media-library";
 export default function usePhotosLibrary() {
   const [photos, setPhotos] = useState<Asset[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAllLoaded, setIsAllLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -22,7 +23,9 @@ export default function usePhotosLibrary() {
           cursor = nextPage.endCursor;
           hasMore = nextPage.hasNextPage;
         }
+        setIsAllLoaded(true);
       } catch (err) {
+        setIsAllLoaded(true);
         setError(err instanceof Error ? err.message : "Unknown error");
         setIsLoading(false);
       }
@@ -30,5 +33,5 @@ export default function usePhotosLibrary() {
     loadPhotos();
   }, []);
 
-  return { photos, isLoading, error };
+  return { photos, isLoading, error, isAllLoaded };
 }
