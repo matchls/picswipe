@@ -58,7 +58,7 @@ export default function ReviewScreen() {
   }
   if (toDelete.length === 0) {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.green.light }}>
         <AppHeader />
         <View style={styles.emptyContainer}>
           <Ionicons
@@ -72,7 +72,7 @@ export default function ReviewScreen() {
     );
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.green.light }}>
       <AppHeader></AppHeader>
       <View style={styles.container}>
         <FlatList
@@ -112,6 +112,7 @@ export default function ReviewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.green.background,
   },
   thumbnail: {
     width: "33%",
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 16,
+    backgroundColor: colors.green.background,
   },
   emptyText: {
     fontSize: 18,
